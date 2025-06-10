@@ -26,10 +26,6 @@ public class CourseController {
         return courseService.getCourse(course);
     }
 
-    @GetMapping("/{id}")
-    public Course getCourseById(@PathVariable String id) {
-        return courseService.getCourseById(id);
-    }
 
     @GetMapping
     public List<Course> getAllCourse() {
@@ -42,7 +38,7 @@ public class CourseController {
     }
 
     @PutMapping("/{id}")
-    public Course updateCourse(@PathVariable String categoryId){
+    public Course updateCourse(@PathVariable String id, @RequestBody Course course){
         return courseService.updateCourse(id, course);
     }
 

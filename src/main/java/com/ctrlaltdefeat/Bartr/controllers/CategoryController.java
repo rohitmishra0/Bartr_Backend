@@ -2,7 +2,6 @@ package com.ctrlaltdefeat.Bartr.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,32 +19,35 @@ import com.ctrlaltdefeat.Bartr.services.CategoryService;
 @RequestMapping("/api/categories")
 public class CategoryController {
     
-    @Autowired
     private final CategoryService categoryService;
 
+   public CategoryController(CategoryService categoryService) {
+       this.categoryService = categoryService;
+   }
+
     @PostMapping
-    public Category createCategory(@RequestBody Category category) throws AppwriteException{
+    public Category createCategory(@RequestBody Category category) {
         return categoryService.createCategory(category);
     }
 
     @GetMapping("/{id}")
-    public Category getCategoryById(@PathVariable String id) throws AppwriteException{
+    public Category getCategoryById(@PathVariable String id) {
         return categoryService.getCategoryById(id);
     }
 
     @GetMapping
-    public List<Category> getAllCategories() throws AppwriteException{
-        return catgeoryService.getAllCategories();
+    public List<Category> getAllCategories() {
+        return categoryService.getAllCategories();
     }
 
     @PutMapping("/{id}")
-    public Category updateCategory(@PathVariable String id, @RequestBody Category category) throws AppwriteException{
+    public Category updateCategory(@PathVariable String id, @RequestBody Category category) {
         return categoryService.updateCategory(id, category);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable String id) throws AppwriteException{
-        catgeoryService.deleteCategory(id);
+    public void deleteCategory(@PathVariable String id){
+        categoryService.deleteCategory(id);
     }
 
 

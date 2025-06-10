@@ -1,10 +1,15 @@
 package com.ctrlaltdefeat.Bartr.repository;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
+import java.util.List;
 import java.util.Map;
-public abstract class AppwriteRestRepository {
+import java.util.stream.Collectors;
+public abstract class AppwriteRestRepository<T> {
    protected final RestTemplate restTemplate;
+   protected final ObjectMapper objectMapper = new ObjectMapper();
    @Value("${appwrite.endpoint}")
    protected String baseUrl;
    @Value("${appwrite.project.id}")
@@ -17,61 +22,67 @@ public abstract class AppwriteRestRepository {
        this.restTemplate = restTemplate;
    }
    protected abstract String getCollectionId();
-   public String createDocument(Map<String, Object> data) {
+   protected abstract Class<T> getEntityClass();
+   public T createDocument(Map<String, Object> data) {
        HttpHeaders headers = buildHeaders();
        Map<String, Object> body = Map.of("documentId", "unique()", "data", data);
        HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
-       ResponseEntity<String> response = restTemplate.postForEntity(
+       ResponseEntity<Map> response = restTemplate.postForEntity(
                baseUrl + "/databases/" + databaseId + "/collections/" + getCollectionId() + "/documents",
                request,
-               String.class
+               Map.class
        );
-       return response.getBody();
+       Map<String, Object> documentData = (Map<String, Object>) response.getBody().get("data");
+       return objectMapper.convertValue(documentData, getEntityClass());
    }
-   public String getDocument(String id) {
+   public T getDocument(String id) {
        HttpHeaders headers = buildHeaders();
        HttpEntity<Void> request = new HttpEntity<>(headers);
-       ResponseEntity<String> response = restTemplate.exchange(
+       ResponseEntity<Map> response = restTemplate.exchange(
                baseUrl + "/databases/" + databaseId + "/collections/" + getCollectionId() + "/documents/" + id,
                HttpMethod.GET,
                request,
-               String.class
+               Map.class
        );
-       return response.getBody();
+       Map<String, Object> documentData = (Map<String, Object>) response.getBody().get("data");
+       return objectMapper.convertValue(documentData, getEntityClass());
    }
-   public String listDocuments() {
+   public List<T> listDocuments() {
        HttpHeaders headers = buildHeaders();
        HttpEntity<Void> request = new HttpEntity<>(headers);
-       ResponseEntity<String> response = restTemplate.exchange(
+       ResponseEntity<Map> response = restTemplate.exchange(
                baseUrl + "/databases/" + databaseId + "/collections/" + getCollectionId() + "/documents",
                HttpMethod.GET,
                request,
-               String.class
+               Map.class
        );
-       return response.getBody();
+       List<Map<String, Object>> documents = (List<Map<String, Object>>) response.getBody().get("documents");
+       return documents.stream()
+               .map(doc -> objectMapper.convertValue(doc.get("data"), getEntityClass()))
+               .collect(Collectors.toList());
    }
-   public String updateDocument(String id, Map<String, Object> data) {
+   public T updateDocument(String id, Map<String, Object> data) {
        HttpHeaders headers = buildHeaders();
        Map<String, Object> body = Map.of("data", data);
        HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
-       ResponseEntity<String> response = restTemplate.exchange(
+       ResponseEntity<Map> response = restTemplate.exchange(
                baseUrl + "/databases/" + databaseId + "/collections/" + getCollectionId() + "/documents/" + id,
                HttpMethod.PATCH,
                request,
-               String.class
+               Map.class
        );
-       return response.getBody();
+       Map<String, Object> documentData = (Map<String, Object>) response.getBody().get("data");
+       return objectMapper.convertValue(documentData, getEntityClass());
    }
-   public String deleteDocument(String id) {
+   public void deleteDocument(String id) {
        HttpHeaders headers = buildHeaders();
        HttpEntity<Void> request = new HttpEntity<>(headers);
-       ResponseEntity<String> response = restTemplate.exchange(
+       restTemplate.exchange(
                baseUrl + "/databases/" + databaseId + "/collections/" + getCollectionId() + "/documents/" + id,
                HttpMethod.DELETE,
                request,
-               String.class
+               Void.class
        );
-       return response.getBody();
    }
    private HttpHeaders buildHeaders() {
        HttpHeaders headers = new HttpHeaders();
