@@ -4,6 +4,8 @@ import com.ctrlaltdefeat.Bartr.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 @Service
 public class UserService {
@@ -13,21 +15,21 @@ public class UserService {
    public UserService(UserRepository userRepository) {
        this.userRepository = userRepository;
    }
-   public String createUser(User user) {
+   public User createUser(User user) {
     Map<String,Object> data = objectMapper.convertValue(user, Map.class);
        return userRepository.createDocument(data);
    }
-   public String getUserById(String id) {
+   public User getUserById(String id) {
        return userRepository.getDocument(id);
    }
-   public String getAllUsers() {
+   public List<User> getAllUsers() {
        return userRepository.listDocuments();
    }
-   public String updateUser(String id,User user) {
+   public User updateUser(String id,User user) {
     Map<String,Object> data = objectMapper.convertValue(user, Map.class);
        return userRepository.updateDocument(id, data);
    }
-   public String deleteUser(String id) {
-       return userRepository.deleteDocument(id);
+   public void deleteUser(String id) {
+        userRepository.deleteDocument(id);
    }
 }

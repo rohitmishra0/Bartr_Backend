@@ -4,6 +4,8 @@ import com.ctrlaltdefeat.Bartr.repository.PaymentRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 @Service
 public class PaymentService {
@@ -13,17 +15,17 @@ public class PaymentService {
    public PaymentService(PaymentRepository paymentRepository) {
        this.paymentRepository = paymentRepository;
    }
-   public String createPayment(Payment payment) {
+   public Payment createPayment(Payment payment) {
     Map<String,Object> data = objectMapper.convertValue(payment, Map.class);
        return paymentRepository.createDocument(data);
    }
-   public String getPaymentById(String id) {
+   public Payment getPaymentById(String id) {
        return paymentRepository.getDocument(id);
    }
-   public String getAllPayments() {
+   public List<Payment> getAllPayments() {
        return paymentRepository.listDocuments();
    }
-   public String deletePayment(String id) {
-       return paymentRepository.deleteDocument(id);
+   public void deletePayment(String id) {
+        paymentRepository.deleteDocument(id);
    }
 }

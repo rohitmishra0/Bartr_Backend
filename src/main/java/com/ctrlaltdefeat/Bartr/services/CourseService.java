@@ -4,6 +4,8 @@ import com.ctrlaltdefeat.Bartr.repository.CourseRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 @Service
 public class CourseService {
@@ -12,21 +14,21 @@ public class CourseService {
    public CourseService(CourseRepository courseRepository) {
        this.courseRepository = courseRepository;
    }
-   public String createCourse(Course course) {
+   public Course createCourse(Course course) {
         Map<String,Object> data = objectMapper.convertValue(course, Map.class);
        return courseRepository.createDocument(data);
    }
-   public String getCourseById(String id) {
+   public Course getCourseById(String id) {
        return courseRepository.getDocument(id);
    }
-   public String getAllCourses() {
+   public List<Course> getAllCourses() {
        return courseRepository.listDocuments();
    }
-   public String updateCourse(String id, Course course) {
+   public Course updateCourse(String id, Course course) {
     Map<String,Object> data = objectMapper.convertValue(course, Map.class);
        return courseRepository.updateDocument(id, data);
    }
-   public String deleteCourse(String id) {
-       return courseRepository.deleteDocument(id);
+   public void deleteCourse(String id) {
+        courseRepository.deleteDocument(id);
    }
 }
