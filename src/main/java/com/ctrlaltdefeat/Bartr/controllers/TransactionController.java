@@ -1,5 +1,7 @@
 package com.ctrlaltdefeat.Bartr.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,9 +19,12 @@ import com.ctrlaltdefeat.Bartr.models.Transaction;
 @RestController
 @RequestMapping("/api/transactions")
 public class TransactionController {
-    @Autowired
+    
     private final TransactionService transactionService;
 
+    public TransactionController(TransactionService transactionService) {
+       this.transactionService = transactionService;
+   }
     @PostMapping
     public Transaction createTransaction(@RequestBody Transaction transaction){
         return transactionService.createTransaction(transaction);
@@ -27,7 +32,7 @@ public class TransactionController {
 
     @GetMapping("/{id}")
     public Transaction geTransactionById(@PathVariable String id) {
-        return transactionService.geTransactionById(id);
+        return transactionService.getTransactionById(id);
     }
 
     @GetMapping

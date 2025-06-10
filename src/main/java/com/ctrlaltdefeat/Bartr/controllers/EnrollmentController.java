@@ -10,11 +10,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ctrlaltdefeat.Bartr.models.Enrollment;
+import com.ctrlaltdefeat.Bartr.services.EnrollmentService;
+
 @RestController
 @RequestMapping("/api/enrollments")
 public class EnrollmentController {
-    @Autowired
+    
     private final EnrollmentService enrollmentService;
+
+    
+
+   public EnrollmentController(EnrollmentService enrollmentService) {
+       this.enrollmentService = enrollmentService;
+   }
 
     @PostMapping
     public Enrollment enrollUser(@RequestBody Enrollment enrollment) {

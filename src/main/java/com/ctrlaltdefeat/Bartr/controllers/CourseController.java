@@ -1,5 +1,7 @@
 package com.ctrlaltdefeat.Bartr.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ctrlaltdefeat.Bartr.services.CategoryService;
 import com.ctrlaltdefeat.Bartr.services.CourseService;
 import com.ctrlaltdefeat.Bartr.models.Course;;
 
@@ -18,12 +21,15 @@ import com.ctrlaltdefeat.Bartr.models.Course;;
 @RestController
 @RequestMapping("/api/courses")
 public class CourseController {
-    @Autowired
+    
     private final CourseService courseService;
 
+   public CourseController(CourseService courseService) {
+       this.courseService = courseService;
+   }
     @PostMapping
     public Course createCourse(@RequestBody Course course){
-        return courseService.getCourse(course);
+        return courseService.createCourse(course);
     }
 
 

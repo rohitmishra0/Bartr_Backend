@@ -1,5 +1,7 @@
 package com.ctrlaltdefeat.Bartr.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +18,13 @@ import com.ctrlaltdefeat.Bartr.models.Payment;
 @RestController
 @RequestMapping("/api/payments")
 public class PaymentController {
-    @Autowired
+   
     private final PaymentService paymentService;
 
+
+   public PaymentController(PaymentService paymentService) {
+       this.paymentService = paymentService;
+   }
     @PostMapping
     public Payment createPayment(@RequestBody Payment payment) {
         return paymentService.createPayment(payment);
