@@ -13,11 +13,7 @@ public class BartrApplication {
 	}
 
 	@Bean
-<<<<<<< HEAD
 	public RestTemplate RestTemplate(){
-=======
-	public RestTemplate restTemplate(){
->>>>>>> 5889fd7 (updated application.properties)
 		return new RestTemplate();
 	}
 
