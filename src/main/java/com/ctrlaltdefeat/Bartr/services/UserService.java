@@ -1,4 +1,4 @@
-package com.ctrlaltdefeat.Bartr.Services;
+package com.ctrlaltdefeat.Bartr.services;
 
 import org.springframework.stereotype.Service;
 

@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ctrlaltdefeat.Bartr.Services.UserService;
+import com.ctrlaltdefeat.Bartr.services.UserService;
 import com.ctrlaltdefeat.Bartr.models.User;
 
-import io.appwrite.exceptions.AppwriteException;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ctrlaltdefeat.Bartr.Services.PaymentService;
+import com.ctrlaltdefeat.Bartr.services.PaymentService;
 import com.ctrlaltdefeat.Bartr.models.Payment;
 
 import io.appwrite.exceptions.AppwriteException;

@@ -1,11 +1,13 @@
 package com.ctrlaltdefeat.Bartr.controllers;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import io.appwrite.exceptions.AppwriteException;
+import com.ctrlaltdefeat.Bartr.models.Enrollment;
+import com.ctrlaltdefeat.Bartr.services.EnrollmentService;
 
 @RestController
 @RequestMapping("/api/enrollments")
