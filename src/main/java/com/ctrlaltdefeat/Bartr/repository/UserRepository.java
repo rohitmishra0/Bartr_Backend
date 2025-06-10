@@ -1,8 +1,8 @@
-package com.ctrlaltdefeat.Bartr.repositories;
+package com.ctrlaltdefeat.Bartr.repository;
 
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserRepository {
-
+    
 }
