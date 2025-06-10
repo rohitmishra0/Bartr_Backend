@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ctrlaltdefeat.Bartr.Services.TransactionService;
+import com.ctrlaltdefeat.Bartr.services.TransactionService;
 import com.ctrlaltdefeat.Bartr.models.Transaction;
 
-import io.appwrite.exceptions.AppwriteException;
 
 @RestController
 @RequestMapping("/api/transactions")
@@ -27,12 +26,12 @@ public class TransactionController {
     }
 
     @GetMapping("/{id}")
-    public Transaction geTransactionById(@PathVariable String id) throws AppwriteException{
+    public Transaction geTransactionById(@PathVariable String id) {
         return transactionService.geTransactionById(id);
     }
 
     @GetMapping
-    public List<Transaction> getAllTransactions() throws AppwriteException{
+    public List<Transaction> getAllTransactions() {
         return transactionService.getAllTransactions();
     }
 
