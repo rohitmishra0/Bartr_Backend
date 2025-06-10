@@ -30,6 +30,7 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -42,11 +43,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>io.appwrite</groupId>
-			<artifactId>sdk-for-kotlin</artifactId>
-			<version>9.0.0</version>
-		</dependency>
+		
 	</dependencies>
 
 	<build>
