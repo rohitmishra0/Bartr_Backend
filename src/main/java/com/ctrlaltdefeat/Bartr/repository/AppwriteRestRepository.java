@@ -33,6 +33,7 @@ public abstract class AppwriteRestRepository<T> {
                Map.class
        );
        Map<String, Object> documentData = response.getBody();
+       System.out.println(documentData);
        documentData.keySet().removeIf(key -> key.startsWith("$"));
        return objectMapper.convertValue(documentData, getEntityClass());
    }
@@ -45,7 +46,9 @@ public abstract class AppwriteRestRepository<T> {
                request,
                Map.class
        );
-       Map<String, Object> documentData = (Map<String, Object>) response.getBody().get("data");
+       Map<String, Object> documentData = response.getBody();
+       System.out.println(documentData);
+       documentData.keySet().removeIf(key -> key.startsWith("$"));
        return objectMapper.convertValue(documentData, getEntityClass());
    }
    public List<T> listDocuments() {
@@ -74,7 +77,9 @@ public abstract class AppwriteRestRepository<T> {
                request,
                Map.class
        );
-       Map<String, Object> documentData = (Map<String, Object>) response.getBody().get("data");
+       Map<String, Object> documentData = response.getBody();
+       System.out.println(documentData);
+       documentData.keySet().removeIf(key -> key.startsWith("$"));
        return objectMapper.convertValue(documentData, getEntityClass());
    }
    public void deleteDocument(String id) {
