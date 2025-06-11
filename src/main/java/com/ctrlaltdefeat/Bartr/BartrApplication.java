@@ -14,7 +14,7 @@ public class BartrApplication {
 
 	@Bean
 	public RestTemplate RestTemplate(){
-		return new RestTemplate();
+		return UnsafeRestTemplate.createUnsafeRestTemplate();
 	}
 
 }

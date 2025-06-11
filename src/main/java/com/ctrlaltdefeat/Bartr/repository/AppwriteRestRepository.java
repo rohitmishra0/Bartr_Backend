@@ -32,7 +32,8 @@ public abstract class AppwriteRestRepository<T> {
                request,
                Map.class
        );
-       Map<String, Object> documentData = (Map<String, Object>) response.getBody().get("data");
+       Map<String, Object> documentData = response.getBody();
+       documentData.keySet().removeIf(key -> key.startsWith("$"));
        return objectMapper.convertValue(documentData, getEntityClass());
    }
    public T getDocument(String id) {
@@ -57,6 +58,8 @@ public abstract class AppwriteRestRepository<T> {
                Map.class
        );
        List<Map<String, Object>> documents = (List<Map<String, Object>>) response.getBody().get("documents");
+       System.out.println(documents);
+
        return documents.stream()
                .map(doc -> objectMapper.convertValue(doc.get("data"), getEntityClass()))
                .collect(Collectors.toList());
