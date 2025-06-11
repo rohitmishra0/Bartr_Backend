@@ -16,8 +16,6 @@ import com.ctrlaltdefeat.Bartr.services.CategoryService;
 import com.ctrlaltdefeat.Bartr.services.CourseService;
 import com.ctrlaltdefeat.Bartr.models.Course;;
 
-
-
 @RestController
 @RequestMapping("/api/courses")
 public class CourseController {

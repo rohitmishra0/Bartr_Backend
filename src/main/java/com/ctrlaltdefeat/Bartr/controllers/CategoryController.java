@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ctrlaltdefeat.Bartr.models.Category;
 import com.ctrlaltdefeat.Bartr.services.CategoryService;
 
-
 @RestController
 @RequestMapping("/api/categories")
 public class CategoryController {
@@ -49,9 +48,6 @@ public class CategoryController {
     public void deleteCategory(@PathVariable String id){
         categoryService.deleteCategory(id);
     }
-
-
-
 }
 
 
