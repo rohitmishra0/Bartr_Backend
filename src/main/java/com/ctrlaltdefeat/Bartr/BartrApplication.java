@@ -3,6 +3,7 @@ package com.ctrlaltdefeat.Bartr;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
@@ -13,8 +14,12 @@ public class BartrApplication {
 	}
 
 	@Bean
-	public RestTemplate RestTemplate(){
-		return UnsafeRestTemplate.createUnsafeRestTemplate();
-	}
-
+	public RestTemplate restTemplate() {
+        // Set HttpComponentsClientHttpRequestFactory to enable PATCH
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+        return restTemplate;
+    }
 }
+
+// return UnsafeRestTemplate.createUnsafeRestTemplate();
