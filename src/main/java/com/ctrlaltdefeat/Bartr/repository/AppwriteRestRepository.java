@@ -3,6 +3,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Map;
@@ -64,24 +66,44 @@ public abstract class AppwriteRestRepository<T> {
        System.out.println(documents);
 
        return documents.stream()
-               .map(doc -> objectMapper.convertValue(doc.get("data"), getEntityClass()))
+               .map(doc -> {
+                doc.keySet().removeIf(key -> key.startsWith("$"));
+                return objectMapper.convertValue(doc, getEntityClass());
+                })
                .collect(Collectors.toList());
    }
    public T updateDocument(String id, Map<String, Object> data) {
-       HttpHeaders headers = buildHeaders();
-       Map<String, Object> body = Map.of("data", data);
-       HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
-       ResponseEntity<Map> response = restTemplate.exchange(
-               baseUrl + "/databases/" + databaseId + "/collections/" + getCollectionId() + "/documents/" + id,
-               HttpMethod.PATCH,
-               request,
-               Map.class
-       );
-       Map<String, Object> documentData = response.getBody();
-       System.out.println(documentData);
-       documentData.keySet().removeIf(key -> key.startsWith("$"));
-       return objectMapper.convertValue(documentData, getEntityClass());
-   }
+    try {
+        HttpHeaders headers = buildHeaders();
+        Map<String, Object> body = Map.of("data", data);
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
+        
+        ResponseEntity<Map> response = restTemplate.exchange(
+            baseUrl + "/databases/" + databaseId + "/collections/" + getCollectionId() + "/documents/" + id,
+            HttpMethod.PATCH,
+            request,
+            Map.class
+        );
+        
+        // Handle success
+        Map<String, Object> documentData = response.getBody();
+        System.out.println(documentData);
+        documentData.keySet().removeIf(key -> key.startsWith("$"));
+        return objectMapper.convertValue(documentData, getEntityClass());
+    } catch (HttpClientErrorException e) {
+        // Client-side error (4xx)
+        System.err.println("Client error: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
+        throw e;
+    } catch (HttpServerErrorException e) {
+        // Server-side error (5xx)
+        System.err.println("Server error: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
+        throw e;
+    } catch (Exception e) {
+        // Other errors
+        System.err.println("Unknown error: " + e.getMessage());
+        throw e;
+    }
+}
    public void deleteDocument(String id) {
        HttpHeaders headers = buildHeaders();
        HttpEntity<Void> request = new HttpEntity<>(headers);
