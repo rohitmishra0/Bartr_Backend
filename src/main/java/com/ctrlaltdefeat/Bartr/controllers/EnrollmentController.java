@@ -1,5 +1,7 @@
 package com.ctrlaltdefeat.Bartr.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,15 +32,15 @@ public class EnrollmentController {
         return enrollmentService.enrollUser(enrollment);
     }
 
-    @GetMapping("/user/{userId}")
-    public List<Enrollment> getEnrollmentsForUser(@PathVariable String userId) {
-        return enrollmentService.getEnrollmentsForUser(userId);
-    }
+    // @GetMapping("/user/{userId}")
+    // public List<Enrollment> getEnrollmentsForUser(@PathVariable String userId) {
+    //     return enrollmentService.getEnrollmentsForUser(userId);
+    // }
 
-    @GetMapping("/course/{courseId}")
-    public List<Enrollment> getEnrollmentsForCourse(@PathVariable String courseId) {
-        return enrollmentService.getEnrollmentsForCourse(courseId);
-    }
+    // @GetMapping("/course/{courseId}")
+    // public List<Enrollment> getEnrollmentsForCourse(@PathVariable String courseId) {
+    //     return enrollmentService.getEnrollmentsForCourse(courseId);
+    // }
 
     @DeleteMapping("/id")
     public void deleteEnrollment(@PathVariable String id) {
