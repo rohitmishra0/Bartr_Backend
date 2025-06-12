@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ctrlaltdefeat.Bartr.models.Enrollment;
@@ -27,8 +28,8 @@ public class EnrollmentController {
    }
 
     @PostMapping
-    public Enrollment enrollUser(@RequestBody Enrollment enrollment) {
-        return enrollmentService.enrollUser(enrollment);
+    public Enrollment enrollUser(@RequestParam String userId,@RequestParam String courseId) {
+        return enrollmentService.enrollUser(userId,courseId);
     }
 
     @GetMapping("/user/{userId}")
