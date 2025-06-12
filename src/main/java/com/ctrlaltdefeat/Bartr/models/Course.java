@@ -3,7 +3,7 @@ package com.ctrlaltdefeat.Bartr.models;
 import java.util.Date;
 
 public class Course {
-	private int id;
+	private String id;
 	private String title;
 	private String description;
 	private int category_id;
