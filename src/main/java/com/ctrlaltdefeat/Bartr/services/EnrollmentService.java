@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 @Service
 public class EnrollmentService {
    private final EnrollmentRepository enrollmentRepository;
@@ -29,4 +30,18 @@ public class EnrollmentService {
    public void deleteEnrollment(String id) {
         enrollmentRepository.deleteDocument(id);
    }
+
+
+   public List<Enrollment> getEnrollmentsForUser(int userId) {
+    
+    return getAllEnrollments().stream()
+            .filter(e -> userId==e.getId())
+            .collect(Collectors.toList());
+    }
+
+    public List<Enrollment> getEnrollmentsForCourse(int courseId) {
+        return getAllEnrollments().stream()
+                .filter(e -> courseId==e.getId())
+                .collect(Collectors.toList());
+    }
 }
