@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Transaction {
-	private String id;
+	private int id;
 	private int user_id;
 	private int course_id;
 	private String type;
