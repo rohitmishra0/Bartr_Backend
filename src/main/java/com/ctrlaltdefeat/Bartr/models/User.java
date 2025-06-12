@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class User {
+	private String authId;
 	private int id;
 	private String username;
 	private String email;
@@ -16,6 +17,12 @@ public class User {
 	private Date created_at;
 	
 	//Getters and Setters
+	public String getAuthId() {
+		return authId;
+	}
+	public void setAuthId(int authId) {
+		this.authId = authId;
+	}
 	public int getId() {
 		return id;
 	}
