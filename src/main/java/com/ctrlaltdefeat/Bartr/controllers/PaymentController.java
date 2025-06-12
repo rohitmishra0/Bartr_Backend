@@ -30,7 +30,7 @@ public class PaymentController {
         return paymentService.createPayment(payment);
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public Payment getPaymentById(@PathVariable String id) {
         return paymentService.getPaymentById(id);
     }

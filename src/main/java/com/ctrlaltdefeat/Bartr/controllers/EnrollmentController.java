@@ -42,7 +42,7 @@ public class EnrollmentController {
     //     return enrollmentService.getEnrollmentsForCourse(courseId);
     // }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public void deleteEnrollment(@PathVariable String id) {
         enrollmentService.deleteEnrollment(id);
     }

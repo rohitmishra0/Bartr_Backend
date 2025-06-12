@@ -40,7 +40,7 @@ public class TransactionController {
         return transactionService.getAllTransactions();
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public void deleteTransaction(@PathVariable String id){
         transactionService.deleteTransaction(id);
     }
