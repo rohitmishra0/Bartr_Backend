@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Category {
-	private int id;
+	private String id;
 	private String name;
 	private String description;
 	private int xp_cost;

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Payment {
-	private int id;
+	private String id;
 	private int user_id;
 	private int amount;
 	private String mode;
