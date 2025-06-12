@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Enrollment {
-	private String id;
+	private int id;
 	private int course_id;
 	private int learner_id;
 	private Date enrollment_date;
