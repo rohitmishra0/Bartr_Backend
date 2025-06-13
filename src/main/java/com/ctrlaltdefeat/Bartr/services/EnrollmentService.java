@@ -1,9 +1,11 @@
 package com.ctrlaltdefeat.Bartr.services;
+import com.ctrlaltdefeat.Bartr.models.Category;
 import com.ctrlaltdefeat.Bartr.models.Course;
 import com.ctrlaltdefeat.Bartr.models.Enrollment;
 import com.ctrlaltdefeat.Bartr.models.User;
 import com.ctrlaltdefeat.Bartr.repository.EnrollmentRepository;
 import com.ctrlaltdefeat.Bartr.repository.UserRepository;
+import com.ctrlaltdefeat.Bartr.repository.CategoryRepository;
 import com.ctrlaltdefeat.Bartr.repository.CourseRepository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,13 +23,15 @@ public class EnrollmentService {
    private final EnrollmentRepository enrollmentRepository;
    private final UserRepository userRepository;
    private final CourseRepository courseRepository;
+   private final CategoryRepository categoryRepository;
 
       private final ObjectMapper objectMapper =new ObjectMapper();
 
-   public EnrollmentService(EnrollmentRepository enrollmentRepository, UserRepository userRepository,CourseRepository courseRepository) {
+   public EnrollmentService(EnrollmentRepository enrollmentRepository, UserRepository userRepository,CourseRepository courseRepository,CategoryRepository categoryRepository) {
        this.enrollmentRepository = enrollmentRepository;
        this.userRepository = userRepository;
        this.courseRepository = courseRepository;
+       this.categoryRepository = categoryRepository;
    }
    public Enrollment enrollUser(String userId,String courseId) {
        // Business logic for XP checks, eligibility, etc. can be added here. 
@@ -35,7 +39,9 @@ public class EnrollmentService {
         Course course = courseRepository.getDocument(courseId);
 
     int userXp = user.getXp();
-    int xpCost = course.getXpCost();
+    String categoryId = course.getCategory_id(); // or course.getCategory_id()
+    Category category = categoryRepository.getDocument(categoryId);
+    int xpCost = category.getXp_cost();
 
     if (userXp < xpCost) {
         throw new RuntimeException("Insufficient XP to enroll in this course.");

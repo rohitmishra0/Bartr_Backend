@@ -25,7 +25,7 @@ public class EnrollmentController {
        this.enrollmentService = enrollmentService;
    }
 
-    @PostMapping
+    @PostMapping("/enroll/{userId}/{courseId}")
     public Enrollment enrollUser(@RequestParam String userId,@RequestParam String courseId) {
         return enrollmentService.enrollUser(userId,courseId);
     }
