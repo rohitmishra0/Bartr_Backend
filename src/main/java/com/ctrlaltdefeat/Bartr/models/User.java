@@ -20,7 +20,7 @@ public class User {
 	public String getAuthId() {
 		return authId;
 	}
-	public void setAuthId(int authId) {
+	public void setAuthId(String authId) {
 		this.authId = authId;
 	}
 	public int getId() {

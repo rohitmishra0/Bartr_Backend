@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Payment {
-	private int id;
+	private String id;
 	private int user_id;
 	private int amount;
 	private String mode;
@@ -13,10 +13,10 @@ public class Payment {
 	private Date purchased_at;
 	
 	//Getters and Setters
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public int getUser_id() {

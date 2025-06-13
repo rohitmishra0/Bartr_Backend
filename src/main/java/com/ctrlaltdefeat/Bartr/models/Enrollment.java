@@ -5,16 +5,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Enrollment {
-	private int id;
+	private String id;
 	private int course_id;
 	private int learner_id;
 	private Date enrollment_date;
 	
 	//Getters and Setters
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public int getCourse_id() {

@@ -6,8 +6,8 @@ public class Course {
 	private String id;
 	private String title;
 	private String description;
-	private int category_id;
-	private int creator_id;
+	private String category_id;
+	private String creator_id;
 	private Date created_at;
 	private String level;
 	
@@ -30,16 +30,16 @@ public class Course {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getCategory_id() {
+	public String getCategory_id() {
 		return category_id;
 	}
-	public void setCategory_id(int category_id) {
+	public void setCategory_id(String category_id) {
 		this.category_id = category_id;
 	}
-	public int getCreator_id() {
+	public String getCreator_id() {
 		return creator_id;
 	}
-	public void setCreator_id(int creator_id) {
+	public void setCreator_id(String creator_id) {
 		this.creator_id = creator_id;
 	}
 	public Date getCreated_at() {

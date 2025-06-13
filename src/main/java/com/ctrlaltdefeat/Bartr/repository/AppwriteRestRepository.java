@@ -9,6 +9,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+
 public abstract class AppwriteRestRepository<T> {
    protected final RestTemplate restTemplate;
    protected final ObjectMapper objectMapper = new ObjectMapper();

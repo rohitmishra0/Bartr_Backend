@@ -71,16 +71,16 @@ public class EnrollmentService {
    }
 
 
-   public List<Enrollment> getEnrollmentsForUser(int userId) {
+   public List<Enrollment> getEnrollmentsForUser(String userId) {
     
     return getAllEnrollments().stream()
-            .filter(e -> userId==e.getId())
+            .filter(e -> userId.equals(e.getId()))
             .collect(Collectors.toList());
     }
 
-    public List<Enrollment> getEnrollmentsForCourse(int courseId) {
+    public List<Enrollment> getEnrollmentsForCourse(String courseId) {
         return getAllEnrollments().stream()
-                .filter(e -> courseId==e.getId())
+                .filter(e -> courseId.equals(e.getId()))
                 .collect(Collectors.toList());
     }
 }
