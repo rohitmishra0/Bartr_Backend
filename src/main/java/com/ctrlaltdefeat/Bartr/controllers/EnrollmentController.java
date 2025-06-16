@@ -25,10 +25,10 @@ public class EnrollmentController {
        this.enrollmentService = enrollmentService;
    }
 
-    @PostMapping("/enroll/{userId}/{courseId}")
-    public Enrollment enrollUser(@RequestParam String userId,@RequestParam String courseId) {
-        return enrollmentService.enrollUser(userId,courseId);
-    }
+    // @PostMapping("/enroll/{userId}/{courseId}")
+    // public Enrollment enrollUser(@RequestParam String userId,@RequestParam String courseId) {
+    //    return enrollmentService.enrollUser(userId,courseId);
+    // }
 
     @GetMapping("/user/{userId}")
     public List<Enrollment> getEnrollmentsForUser(@PathVariable String userId) {

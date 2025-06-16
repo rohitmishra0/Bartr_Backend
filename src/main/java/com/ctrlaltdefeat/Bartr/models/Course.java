@@ -2,7 +2,10 @@ package com.ctrlaltdefeat.Bartr.models;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Course {
+	
 	private String id;
 	private String title;
 	private String description;

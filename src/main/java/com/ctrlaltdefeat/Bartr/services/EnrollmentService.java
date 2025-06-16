@@ -33,38 +33,38 @@ public class EnrollmentService {
        this.courseRepository = courseRepository;
        this.categoryRepository = categoryRepository;
    }
-   public Enrollment enrollUser(String userId,String courseId) {
-       // Business logic for XP checks, eligibility, etc. can be added here. 
-        User user = userRepository.getDocument(userId);
-        Course course = courseRepository.getDocument(courseId);
+//    public Enrollment enrollUser(String userId,String courseId) {
+//        // Business logic for XP checks, eligibility, etc. can be added here. 
+//         User user = userRepository.getDocument(userId);
+//         Course course = courseRepository.getDocument(courseId);
 
-    int userXp = user.getXp();
-    String categoryId = course.getCategory_id(); // or course.getCategory_id()
-    Category category = categoryRepository.getDocument(categoryId);
-    int xpCost = category.getXp_cost();
+//     int userXp = user.getXp();
+//     //String categoryId = course.getCategory_id(); // or course.getCategory_id()
+//     // Category category = categoryRepository.getDocument(categoryId);
+//     // int xpCost = category.getXp_cost();
 
-    if (userXp < xpCost) {
-        throw new RuntimeException("Insufficient XP to enroll in this course.");
-    }
+//     if (userXp < xpCost) {
+//         throw new RuntimeException("Insufficient XP to enroll in this course.");
+//     }
 
-    // 2. Deduct XP from user
-    user.setXp(userXp - xpCost);
-    Map<String, Object> updatedUser = objectMapper.convertValue(user, Map.class);
-    userRepository.updateDocument(userId, updatedUser);
+//     // 2. Deduct XP from user
+//     user.setXp(userXp - xpCost);
+//     Map<String, Object> updatedUser = objectMapper.convertValue(user, Map.class);
+//     userRepository.updateDocument(userId, updatedUser);
 
-    // 3. Credit XP to creator (instructor)
-    String creatorId = course.getCreator_id();
-    User creator = userRepository.getDocument(creatorId);
-    creator.setXp(creator.getXp() + xpCost);
-    Map<String, Object> updatedCreator = objectMapper.convertValue(creator, Map.class);
-    userRepository.updateDocument(creatorId, updatedCreator);
+//     // 3. Credit XP to creator (instructor)
+//     String creatorId = course.getCreator_id();
+//     User creator = userRepository.getDocument(creatorId);
+//     creator.setXp(creator.getXp() + xpCost);
+//     Map<String, Object> updatedCreator = objectMapper.convertValue(creator, Map.class);
+//     userRepository.updateDocument(creatorId, updatedCreator);
 
-    // 4. Create enrollment
-    Map<String, Object> enrollmentData = new HashMap<>();
-    enrollmentData.put("userId", userId);
-    enrollmentData.put("courseId", courseId);
-       return enrollmentRepository.createDocument(enrollmentData);
-   }
+//     // 4. Create enrollment
+//     Map<String, Object> enrollmentData = new HashMap<>();
+//     enrollmentData.put("userId", userId);
+//     enrollmentData.put("courseId", courseId);
+//        return enrollmentRepository.createDocument(enrollmentData);
+//    }
 
 
 

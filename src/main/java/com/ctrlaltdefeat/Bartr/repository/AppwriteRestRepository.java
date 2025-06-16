@@ -37,8 +37,26 @@ public abstract class AppwriteRestRepository<T> {
                Map.class
        );
        Map<String, Object> documentData = response.getBody();
-       System.out.println(documentData);
+      
        documentData.keySet().removeIf(key -> key.startsWith("$"));
+       Object category = documentData.get("category_id");
+       
+
+       if(category instanceof Map){
+        
+        documentData.put("category_id",((Map<?,?>)category).get("$id"));
+       }
+      
+
+       Object creator = documentData.get("creator_id");
+       
+       if(creator instanceof Map){
+        
+        documentData.put("creator_id",((Map<?,?>)category).get("$id"));
+       }
+       System.out.println("---------------------------------------------------------------------------");
+       System.out.println(documentData);
+
        return objectMapper.convertValue(documentData, getEntityClass());
    }
    public T getDocument(String id) {
@@ -51,8 +69,8 @@ public abstract class AppwriteRestRepository<T> {
                Map.class
        );
        Map<String, Object> documentData = response.getBody();
-       System.out.println(documentData);
        documentData.keySet().removeIf(key -> key.startsWith("$"));
+       
        return objectMapper.convertValue(documentData, getEntityClass());
    }
    public List<T> listDocuments() {
@@ -65,7 +83,6 @@ public abstract class AppwriteRestRepository<T> {
                Map.class
        );
        List<Map<String, Object>> documents = (List<Map<String, Object>>) response.getBody().get("documents");
-       System.out.println(documents);
 
        return documents.stream()
                .map(doc -> {

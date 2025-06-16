@@ -16,6 +16,7 @@ public class CourseService {
    }
    public Course createCourse(Course course) {
         Map<String,Object> data = objectMapper.convertValue(course, Map.class);
+        data.remove("id");
        return courseRepository.createDocument(data);
    }
    public Course getCourseById(String id) {
