@@ -19,11 +19,11 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course createCourse(Course course){
-        Category category = categoryRepository.findBy(course.getCategoryId())
+        Category category = categoryRepository.findById(course.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
 
-    double multiplier = course.getLevel().getMultiplier();
+        double multiplier = course.getLevel().getMultiplier();
 
     int finalPrice = (int) Math.round(category.getXpCost() * multiplier);
     System.out.println("Calculated price XP: "+ finalPrice);
