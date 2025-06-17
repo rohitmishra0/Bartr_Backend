@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 // import jakarta.persistence.GeneratedValue;
 // import jakarta.persistence.GenerationType;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "category")
+@Getter
+@Setter
 @Data // Generates getters, setters, toString, equals, and hashCode
 @NoArgsConstructor // No-arg constructor
 @AllArgsConstructor // All-arg constructor
@@ -28,4 +28,36 @@ public class Category {
 
 	@Column(name = "xpCost")
 	private int xpCost;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getXpCost() {
+		return xpCost;
+	}
+
+	public void setXpCost(int xpCost) {
+		this.xpCost = xpCost;
+	}
 }

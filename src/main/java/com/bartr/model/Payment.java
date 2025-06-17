@@ -1,15 +1,14 @@
 package com.bartr.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "payment")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Payment {
@@ -33,4 +32,52 @@ public class Payment {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "purchasedAt")
 	private Date purchasedAt;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+
+	public int getXpPurchased() {
+		return xpPurchased;
+	}
+
+	public void setXpPurchased(int xpPurchased) {
+		this.xpPurchased = xpPurchased;
+	}
+
+	public Date getPurchasedAt() {
+		return purchasedAt;
+	}
+
+	public void setPurchasedAt(Date purchasedAt) {
+		this.purchasedAt = purchasedAt;
+	}
 }

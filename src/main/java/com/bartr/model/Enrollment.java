@@ -1,15 +1,14 @@
 package com.bartr.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "enrollment")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Enrollment {
@@ -29,5 +28,35 @@ public class Enrollment {
 	private Date enrollmentDate;
 
 
+	public int getId() {
+		return id;
+	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getCourseId() {
+		return courseId;
+	}
+
+	public void setCourseId(int courseId) {
+		this.courseId = courseId;
+	}
+
+	public int getLearnerId() {
+		return learnerId;
+	}
+
+	public void setLearnerId(int learnerId) {
+		this.learnerId = learnerId;
+	}
+
+	public Date getEnrollmentDate() {
+		return enrollmentDate;
+	}
+
+	public void setEnrollmentDate(Date enrollmentDate) {
+		this.enrollmentDate = enrollmentDate;
+	}
 }

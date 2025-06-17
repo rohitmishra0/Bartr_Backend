@@ -22,41 +22,45 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/api/categories")
-@RequiredArgsConstructor
 public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @PostMapping
+    public CategoryController(CategoryService categoryService){
+        this.categoryService = categoryService;
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<Category>> getAllCategories(){
+        List<Category> categories = categoryService.getAllCategories();
+        return ResponseEntity.ok(categories);
+    }
+    @PostMapping("insert/category")
     public ResponseEntity<Category> createCategory(@RequestBody Category category){
         Category created = categoryService.createCategory(category);
         return ResponseEntity.status(201).body(created);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("category/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable int id, @RequestBody Category category) {
         Category updated = categoryService.updateCategory(id,category);
         
         return ResponseEntity.ok(updated);
     }
 
-    @DeleteMapping
+    @DeleteMapping(("category/deleteById/{id}"))
     public ResponseEntity<Category> deleteCategory(@PathVariable int id) {
         categoryService.deleteCategory(id);
         
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("category/getByID/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable int id) {
         Category category = categoryService.getCategoryById(id);
         
         return ResponseEntity.ok(category);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories(){
-        List<Category> categories = categoryService.getAllCategories();
-        return ResponseEntity.ok(categories);
-    }
+
 }

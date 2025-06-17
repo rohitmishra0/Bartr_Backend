@@ -6,15 +6,19 @@ import com.bartr.model.Category;
 import com.bartr.repository.CategoryRepository;
 import com.bartr.service.CategoryService;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
+    public CategoryServiceImpl(CategoryRepository categoryRepository){
+        this.categoryRepository = categoryRepository;
+    }
 
     @Override
     public Category createCategory(Category category){
