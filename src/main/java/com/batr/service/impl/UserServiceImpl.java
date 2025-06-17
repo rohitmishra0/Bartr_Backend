@@ -4,7 +4,6 @@ import com.batr.model.User;
 import com.batr.repository.UserRepository;
 import com.batr.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,7 +13,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
-    public User registerUSer(String email){
+    public User registerUser(String email){
 
         Optional<User> existingUser = userRepository.findByEmail(email);
         if(existingUser.isPresent()){
@@ -42,10 +41,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int getUserXP(int userId){
+    public int getUserXp(int userId){
         return userRepository.findById(userId)
-                .map(USer::getXp)
+                .map(User::getXp)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
+
+    
 
 }

@@ -22,7 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
                             .orElseThrow(() -> new RuntimeException("Category not found with ID: "+id));
          existing.setName(category.getName());
          existing.setDescription(category.getDescription());
-         existing.setXp_cost(category.getXp_cost());
+         existing.setXpCost(category.getXpCost());
          return categoryRepository.save(existing);                   
     }
 
