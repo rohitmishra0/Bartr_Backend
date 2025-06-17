@@ -32,10 +32,10 @@ public class Course {
 	private String description;
 
 	@Column(name = "category_id", nullable = false)
-	private String category_id;
+	private int category_id;
 
 	@Column(name = "creator_id", nullable = false)
-	private String creator_id;
+	private int creator_id;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at")
