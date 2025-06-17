@@ -1,9 +1,6 @@
 package com.batr.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 // import jakarta.persistence.GeneratedValue;
 // import jakarta.persistence.GenerationType;
 
@@ -20,7 +17,7 @@ public class Category {
 
 	@Id
 	// Uncomment if you want the ID to be auto-generated
-	// @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Column(name = "name", nullable = false)
@@ -29,6 +26,6 @@ public class Category {
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "xp_cost")
-	private int xp_cost;
+	@Column(name = "xpCost")
+	private int xpCost;
 }

@@ -1,15 +1,9 @@
 package com.batr.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 import java.util.Date;
 
@@ -21,17 +15,18 @@ import java.util.Date;
 public class Enrollment {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "course_id", nullable = false)
-	private int course_id;
+	@Column(name = "courseId", nullable = false)
+	private int courseId;
 
-	@Column(name = "learner_id", nullable = false)
-	private int learner_id;
+	@Column(name = "learnerId", nullable = false)
+	private int learnerId;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "enrollment_date")
-	private Date enrollment_date;
+	@Column(name = "enrollmentDate")
+	private Date enrollmentDate;
 
 
 

@@ -17,7 +17,8 @@ import java.util.List;
 public class User {
 
 	@Id
-	@Column(name = "id")
+	//@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Column(name = "username", nullable = false, unique = true)
@@ -38,14 +39,14 @@ public class User {
 	@Column(name = "xp")
 	private int xp;
 
-	@Column(name = "avatar_url")
-	private String avatar_url;
+	@Column(name = "avatarUrl")
+	private String avatarUrl;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_at")
-	private Date created_at;
+	@Column(name = "createdAt")
+	private Date createdAt;
 
 	@OneToMany
-	@JoinColumn(name = "learner_id", referencedColumnName = "id") // maps to Enrollment.learner_id
+	@JoinColumn(name = "learnerId", referencedColumnName = "id") // maps to Enrollment.learner_id
 	private List<Enrollment> enrollmentList;
 }

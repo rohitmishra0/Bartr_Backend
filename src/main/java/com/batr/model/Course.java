@@ -1,11 +1,6 @@
 package com.batr.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +17,7 @@ public class Course {
 
 	@Id
 	// Uncomment if you want auto-generated ID
-	// @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Column(name = "title", nullable = false)
@@ -31,15 +26,15 @@ public class Course {
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "category_id", nullable = false)
-	private int category_id;
+	@Column(name = "categoryId", nullable = false)
+	private int categoryId;
 
-	@Column(name = "creator_id", nullable = false)
-	private int creator_id;
+	@Column(name = "creatorId", nullable = false)
+	private int creatorId;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_at")
-	private Date created_at;
+	@Column(name = "createdAt")
+	private Date createdAt;
 
 	@Column(name = "level")
 	private String level;

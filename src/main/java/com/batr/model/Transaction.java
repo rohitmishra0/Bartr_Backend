@@ -1,15 +1,9 @@
 package com.batr.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 import java.util.Date;
 
@@ -21,13 +15,14 @@ import java.util.Date;
 public class Transaction {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "user_id", nullable = false)
-	private int user_id;
+	@Column(name = "userId", nullable = false)
+	private int userId;
 
-	@Column(name = "course_id", nullable = false)
-	private int course_id;
+	@Column(name = "courseId", nullable = false)
+	private int courseId;
 
 	@Column(name = "type", nullable = false)
 	private String type;
@@ -36,6 +31,6 @@ public class Transaction {
 	private int amount;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "transacted_at")
-	private Date transacted_at;
+	@Column(name = "transactedAt")
+	private Date transactedAt;
 }
