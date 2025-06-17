@@ -29,7 +29,12 @@ public class CourseServiceImpl implements CourseService {
                         .orElseThrow(() -> new RuntimeException("Creator not found"));
         course.setCategory(category);
         course.setCreator(creator);
-        double multiplier = course.getLevel().getMultiplier();
+        double multiplier = switch(course.getLevel()) {
+            case"Beginner"->1;
+            case"Intermediate"->1.25;
+            case"Expert"->1.5;
+            default->1;
+        };
 
     int finalPrice = (int) Math.round(category.getXpCost() * multiplier);
     System.out.println("Calculated price XP: "+ finalPrice);
@@ -84,7 +89,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    List<Course> getCoursesByCategoryId(int categoryId){
+    public List<Course> getCoursesByCategoryId(int categoryId){
         return courseRepository.findByCategoryId(categoryId);
     }
 }
