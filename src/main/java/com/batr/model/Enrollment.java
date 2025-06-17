@@ -21,7 +21,7 @@ import java.util.Date;
 public class Enrollment {
 
 	@Id
-	private String id;
+	private int id;
 
 	@Column(name = "course_id", nullable = false)
 	private int course_id;

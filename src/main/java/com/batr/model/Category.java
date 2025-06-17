@@ -21,7 +21,7 @@ public class Category {
 	@Id
 	// Uncomment if you want the ID to be auto-generated
 	// @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
+	private int id;
 
 	@Column(name = "name", nullable = false)
 	private String name;

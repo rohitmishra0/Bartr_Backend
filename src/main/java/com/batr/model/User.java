@@ -16,9 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 public class User {
 
-	@Column(name = "auth_id", unique = true)
-	private String authId;
-
 	@Id
 	@Column(name = "id")
 	private int id;

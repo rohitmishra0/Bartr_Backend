@@ -23,7 +23,7 @@ public class Course {
 	@Id
 	// Uncomment if you want auto-generated ID
 	// @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
+	private int id;
 
 	@Column(name = "title", nullable = false)
 	private String title;

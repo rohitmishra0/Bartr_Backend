@@ -21,7 +21,7 @@ import java.util.Date;
 public class Transaction {
 
 	@Id
-	private String id;
+	private int id;
 
 	@Column(name = "user_id", nullable = false)
 	private int user_id;
