@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.batr</groupId>
-	<artifactId>batr</artifactId>
+	<artifactId>bartr</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>batr</name>
 	<description>This is Batr System</description>
