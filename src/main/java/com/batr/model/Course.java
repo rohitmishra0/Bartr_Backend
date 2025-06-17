@@ -38,4 +38,7 @@ public class Course {
 
 	@Column(name = "level")
 	private String level;
+
+	@Column(name = "coursePrice")
+	private int coursePrice;
 }
