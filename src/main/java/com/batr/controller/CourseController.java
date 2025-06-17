@@ -39,7 +39,7 @@ public class CourseController {
         return ResponseEntity.ok(updated);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<Course> deleteCourse(@PathVariable int id) {
         courseService.deleteCourse(id);
         
@@ -53,10 +53,24 @@ public class CourseController {
         return ResponseEntity.ok(course);
     }
 
+  
+
     @GetMapping
     public ResponseEntity<List<Course>> getAllCourse(){
-        List<Course> courses = courseService.getAllCourse();
+        List<Course> courses = courseService.getAllCourses();
         return ResponseEntity.ok(courses);
     }
 
+   
+    @GetMapping("/creator/{creatorId}")
+    public ResponseEntity<List<Course>> getCoursesByCreator(@PathVariable int creatorId){
+        List<Course> courses = courseService.getCoursesByCreatorId(creatorId);
+        return ResponseEntity.ok(courses);
+    }
+
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<List<Course>> getCoursesByCategory(@PathVariable int categoryId){
+        List<Course> courses = courseService.getCoursesByCategoryId(categoryId);
+        return ResponseEntity.ok(courses);
+    }
 }

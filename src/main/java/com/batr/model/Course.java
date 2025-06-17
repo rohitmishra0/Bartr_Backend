@@ -26,11 +26,13 @@ public class Course {
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "categoryId", nullable = false)
-	private int categoryId;
+	@ManyToOne
+	@JoinColumn(name="categoryId", referencedColumnName = "id")
+	private Category category;
 
-	@Column(name = "creatorId", nullable = false)
-	private int creatorId;
+	@ManyToOne
+	@JoinColumn(name="creatorId", referencedColumnName = "id")
+	private User creator;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "createdAt")

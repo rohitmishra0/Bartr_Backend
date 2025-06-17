@@ -1,15 +1,14 @@
 package com.batr.service.impl;
 
-
-
 import java.util.List;
 
 import com.batr.model.Category;
 import com.batr.repository.CategoryRepository;
 import com.batr.service.CategoryService;
 
+@Service
 public class CategoryServiceImpl implements CategoryService {
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public Category createCategory(Category category){
