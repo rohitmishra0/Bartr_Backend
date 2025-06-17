@@ -4,7 +4,6 @@ package com.batr.controller;
 import com.batr.model.Category;
 import com.batr.model.Course;
 import com.batr.service.CourseService;
-import com.batr.service.impl.CourseServiceImpl;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

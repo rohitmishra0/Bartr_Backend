@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.batr.model.Category;
 import com.batr.service.CategoryService;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
