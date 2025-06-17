@@ -6,27 +6,27 @@ import lombok.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "enrollment")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "enrollments")
+
 public class Enrollment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "courseId", nullable = false)
-	private int courseId;
+	// 🔹 Many enrollments can refer to one course
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "courseId", nullable = false)
+	private Course course;
 
-	@Column(name = "learnerId", nullable = false)
-	private int learnerId;
+	// 🔹 Many enrollments can refer to one user
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "learnerId")
+	private User learner;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "enrollmentDate")
 	private Date enrollmentDate;
-
 
 	public int getId() {
 		return id;
@@ -36,20 +36,20 @@ public class Enrollment {
 		this.id = id;
 	}
 
-	public int getCourseId() {
-		return courseId;
+	public Course getCourse() {
+		return course;
 	}
 
-	public void setCourseId(int courseId) {
-		this.courseId = courseId;
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
-	public int getLearnerId() {
-		return learnerId;
+	public User getLearner() {
+		return learner;
 	}
 
-	public void setLearnerId(int learnerId) {
-		this.learnerId = learnerId;
+	public void setLearner(User learner) {
+		this.learner = learner;
 	}
 
 	public Date getEnrollmentDate() {

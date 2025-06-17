@@ -3,6 +3,7 @@ package com.bartr.model;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "courses")
@@ -33,6 +34,17 @@ public class Course {
 	private LocalDateTime createdAt;
 
 	private String level;
+
+	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+	private List<Enrollment> enrollments;
+
+	public List<Enrollment> getEnrollments() {
+		return enrollments;
+	}
+
+	public void setEnrollments(List<Enrollment> enrollments) {
+		this.enrollments = enrollments;
+	}
 
 	public int getId() {
 		return id;

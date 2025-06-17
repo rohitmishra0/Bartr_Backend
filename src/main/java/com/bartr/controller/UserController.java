@@ -1,45 +1,57 @@
 package com.bartr.controller;
 
-import com.bartr.model.Course;
 import com.bartr.model.User;
-import com.bartr.service.CourseService;
 import com.bartr.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/users")
 
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @PostMapping("insert")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        return ResponseEntity.status(201).body(userService.createUser(user));
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
+    // 🔹 Register a new user
+    @PostMapping("/register")
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
+        User createdUser = userService.registerUser(user);
+        return ResponseEntity.status(201).body(createdUser);
     }
 
-    @PutMapping("updateById/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable int id, @RequestBody User user) {
-        return ResponseEntity.ok(userService.updateCourse(id, user));
+    // 🔹 Get user by email
+    @GetMapping("/byEmail")
+    public ResponseEntity<User> getUserByEmail(@RequestParam String email) {
+        Optional<User> user = userService.getUserByEmail(email);
+        return user.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("deleteById/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable int id) {
-        userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
+    // 🔹 Update XP for user
+    @PutMapping("/updateXP")
+    public ResponseEntity<String> updateUserXp(@RequestParam int userId, @RequestParam int xpChange) {
+        userService.updateXP(userId, xpChange);
+        return ResponseEntity.ok("XP updated successfully");
     }
 
-    @GetMapping("getById/{id}")
-    public ResponseEntity<Course> getUserById(@PathVariable int id) {
-        return ResponseEntity.ok(userService.getUserById(id));
+    // 🔹 Get current XP for user
+    @GetMapping("/{id}/xp")
+    public ResponseEntity<Integer> getUserXp(@PathVariable("id") int userId) {
+        int xp = userService.getUserXp(userId);
+        return ResponseEntity.ok(xp);
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Course>> getAllCourses() {
-        return ResponseEntity.ok(courseService.getAllCourses());
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUser();
+        return ResponseEntity.ok(users);
     }
-
 
 }
