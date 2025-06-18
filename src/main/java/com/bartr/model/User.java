@@ -52,6 +52,11 @@ public class User {
 	@Column(name = "createdAt")
 	private Date createdAt;
 
+	@PrePersist
+	protected void onCreate() {
+		this.createdAt = new Date();
+	}
+
 	@OneToMany
 	@JoinColumn(name = "learnerId", referencedColumnName = "id") // maps to Enrollment.learner_id
 	private List<Enrollment> enrollmentList;
