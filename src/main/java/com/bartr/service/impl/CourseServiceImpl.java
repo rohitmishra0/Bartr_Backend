@@ -1,7 +1,11 @@
 package com.bartr.service.impl;
 
 import com.bartr.dao.CourseDao;
+import com.bartr.model.Category;
 import com.bartr.model.Course;
+import com.bartr.model.User;
+import com.bartr.repository.CategoryRepository;
+import com.bartr.repository.UserRepository;
 import com.bartr.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,24 +17,60 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
 
     private final CourseDao courseDao;
+    private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Course createCourse(Course course) {
+        Category category = categoryRepository.findById(course.getCategory().getId())
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        // Fetch and validate creator
+        User creator = userRepository.findById(course.getCreator().getId())
+                .orElseThrow(() -> new RuntimeException("Creator not found"));
+
+        // Set references properly
+        course.setCategory(category);
+        course.setCreator(creator);
+
+        // Calculate XP-based price
+        double multiplier = getLevelMultiplier(course.getLevel());
+        double price = category.getXpCost() * multiplier;
+        course.setPrice(price);
+
         return courseDao.save(course);
     }
 
     @Override
-    public Course updateCourse(int id, Course course) {
-        Course existingCourse = courseDao.findById(id).orElse(null);
-        if (existingCourse == null) return null;
+    public Course updateCourse(int id, Course updatedCourse) {
 
-        // Update fields (you can customize which fields are updatable)
-        existingCourse.setTitle(course.getTitle());
-        existingCourse.setDescription(course.getDescription());
-        existingCourse.setCategory(course.getCategory());
-        existingCourse.setCreator(course.getCreator());
 
-        return courseDao.save(existingCourse);
+        Course existing = courseDao.findById(id)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        existing.setTitle(updatedCourse.getTitle());
+        existing.setDescription(updatedCourse.getDescription());
+
+        if (updatedCourse.getCategory() != null) {
+            Category category = categoryRepository.findById(updatedCourse.getCategory().getId())
+                    .orElseThrow(() -> new RuntimeException("Category not found"));
+            existing.setCategory(category);
+        }
+
+        if (updatedCourse.getCreator() != null) {
+            User creator = userRepository.findById(updatedCourse.getCreator().getId())
+                    .orElseThrow(() -> new RuntimeException("Creator not found"));
+            existing.setCreator(creator);
+        }
+
+        existing.setLevel(updatedCourse.getLevel());
+
+        // Recalculate price
+        double price = existing.getCategory().getXpCost() * getLevelMultiplier(existing.getLevel());
+        existing.setPrice(price);
+
+       
+        return courseDao.save(existing);
     }
 
     @Override
@@ -56,5 +96,18 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getCoursesByCategoryId(int categoryId) {
         return courseDao.findByCategoryId(categoryId);
+    }
+
+    private double getLevelMultiplier(String level) {
+        switch (level.toLowerCase()) {
+            case "beginner":
+                return 1.0;
+            case "intermediate":
+                return 1.25;
+            case "advanced":
+                return 1.5;
+            default:
+                throw new IllegalArgumentException("Invalid level: " + level);
+        }
     }
 }

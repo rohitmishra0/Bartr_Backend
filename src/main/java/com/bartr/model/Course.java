@@ -44,6 +44,9 @@ public class Course {
 
 	private String level;
 
+	@Column(nullable = false)
+	private double price;
+
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
 	private List<Enrollment> enrollments;
 }
