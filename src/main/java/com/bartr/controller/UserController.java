@@ -2,7 +2,6 @@ package com.bartr.controller;
 
 import com.bartr.model.User;
 import com.bartr.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +21,7 @@ public class UserController {
     // 🔹 Register a new user
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
+        System.out.println("controller reached");
         User createdUser = userService.registerUser(user);
         return ResponseEntity.status(201).body(createdUser);
     }

@@ -13,11 +13,14 @@ public interface UserService {
     // Get user by email
     Optional<User> getUserByEmail(String email);
 
-    // Update user's XP
-    void updateXP(int userId, int xpChange);
+    String jwtLogin(User user);
 
-    // Get user's XP
-    int getUserXp(int userId);
+
+    public void updateXP(int userId, int xpChange);
+
+    public int getUserXp(int userId);
 
     List<User> getAllUser();
+
+
 }
