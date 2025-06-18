@@ -36,6 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             // Validate presence of Authorization header
             if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+                System.out.println(authorizationHeader);
                 log.info("Missing or malformed Authorization header.");
                 filterChain.doFilter(request, response);
                 return;

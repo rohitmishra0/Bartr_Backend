@@ -33,7 +33,7 @@ public class SecurityConfig {
 
         httpSec.csrf(AbstractHttpConfigurer::disable);
         httpSec.authorizeHttpRequests(req -> req
-                .requestMatchers("/auth/register", "/auth/login").permitAll()
+                .requestMatchers("api/users/register", "login").permitAll()
                 .anyRequest().authenticated());
         httpSec.cors(Customizer.withDefaults());
         httpSec.httpBasic(Customizer.withDefaults());

@@ -4,6 +4,7 @@ import com.bartr.model.User;
 import com.bartr.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,10 +32,10 @@ public class UserAuthServiceImpl implements UserDetailsService {
                 log.debug("loadUserByUsername : user data is null in DB");
                 throw new UsernameNotFoundException("User not found in DB");
             }
-
+            System.out.println(username);
             UserDetails result = new org.springframework.security.core.userdetails.User(user.getUsername(),
-                    user.getPassword(),null);
-
+                    user.getPassword(), AuthorityUtils.NO_AUTHORITIES);
+            System.out.println(result);
             log.info("loadUserByUsername : User data is fetched from database and submitted to auth provider for authentication");
             return result;
         }catch (Exception e) {
