@@ -1,10 +1,18 @@
 package com.bartr.repository;
 
+import com.bartr.model.Course;
 import com.bartr.model.Transaction;
+import com.bartr.model.User;
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
-    // Add custom query methods if needed
+
+    List<Transaction> findByUser(User user);
+
+    List<Transaction> findByCourse(Course course);
 }

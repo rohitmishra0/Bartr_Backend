@@ -4,6 +4,7 @@ import com.bartr.model.Enrollment;
 import java.util.List;
 
 public interface EnrollmentService {
+    Enrollment enroll(int userId, int courseId);
     List<Enrollment> getAllEnrollments();
     Enrollment getEnrollmentById(int id);
     List<Enrollment> getEnrollmentsByLearnerId(int learnerId);

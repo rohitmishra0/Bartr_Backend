@@ -17,11 +17,13 @@ public class Transaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "userId", nullable = false)
-	private int userId;
+	@ManyToOne
+    @JoinColumn(name = "userId", nullable = false)
+	private User user;
 
-	@Column(name = "courseId", nullable = false)
-	private int courseId;
+	@ManyToOne
+    @JoinColumn(name = "courseId", nullable = false)
+	private Course course;
 
 	@Column(name = "type", nullable = false)
 	private String type;
@@ -33,6 +35,11 @@ public class Transaction {
 	@Column(name = "transactedAt")
 	private Date transactedAt;
 
+	@PrePersist
+    protected void onCreate() {
+        this.transactedAt = new Date();
+    }
+
 	public int getId() {
 		return id;
 	}
@@ -41,20 +48,20 @@ public class Transaction {
 		this.id = id;
 	}
 
-	public int getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUserId(User user) {
+		this.user = user;
 	}
 
-	public int getCourseId() {
-		return courseId;
+	public Course getCourse() {
+		return course;
 	}
 
-	public void setCourseId(int courseId) {
-		this.courseId = courseId;
+	public void setCourseId(Course course) {
+		this.course = course;
 	}
 
 	public String getType() {

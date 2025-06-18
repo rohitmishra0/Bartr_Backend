@@ -19,6 +19,11 @@ public class EnrollmentController {
     public ResponseEntity<Enrollment> createEnrollment(@RequestBody Enrollment enrollment) {
         return ResponseEntity.ok(enrollmentService.saveEnrollment(enrollment));
     }
+
+    @PostMapping("/insert/{userId}/{courseId}")
+    public ResponseEntity<Enrollment> enrollUser(@PathVariable int userId, @PathVariable int courseId) {
+        return ResponseEntity.ok(enrollmentService.enroll(userId,courseId));
+    }
     @GetMapping("")
     public ResponseEntity<List<Enrollment>> getAllEnrollments() {
         return ResponseEntity.ok(enrollmentService.getAllEnrollments());
