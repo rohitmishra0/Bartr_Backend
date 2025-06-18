@@ -7,7 +7,6 @@ import java.util.Date;
 
 @Entity
 @Table(name = "enrollments")
-
 public class Enrollment {
 
 	@Id
@@ -25,9 +24,16 @@ public class Enrollment {
 	private User learner;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "enrollmentDate")
+	@Column(name = "enrollmentDate", nullable = false, updatable = false)
 	private Date enrollmentDate;
 
+	// Automatically sets the date before persisting
+	@PrePersist
+	protected void onCreate() {
+		this.enrollmentDate = new Date();
+	}
+
+	// Getters and setters
 	public int getId() {
 		return id;
 	}

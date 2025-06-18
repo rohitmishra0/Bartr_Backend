@@ -2,7 +2,7 @@ package com.bartr.controller;
 
 import com.bartr.model.Enrollment;
 import com.bartr.service.EnrollmentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,26 +10,24 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/enrollments")
+@RequiredArgsConstructor
 public class EnrollmentController {
 
-    @Autowired
-    private EnrollmentService enrollmentService;
+    private final EnrollmentService enrollmentService;
 
-    @PostMapping("insert")
+    @PostMapping("/insert")
     public ResponseEntity<Enrollment> createEnrollment(@RequestBody Enrollment enrollment) {
-        Enrollment saved = enrollmentService.insertEnrollment(enrollment);
-        return ResponseEntity.ok(saved);
+        return ResponseEntity.ok(enrollmentService.saveEnrollment(enrollment));
+    }
+    @GetMapping("")
+    public ResponseEntity<List<Enrollment>> getAllEnrollments() {
+        return ResponseEntity.ok(enrollmentService.getAllEnrollments());
     }
 
-    @DeleteMapping("deleteById/{id}")
-    public ResponseEntity<Void> deleteEnrollment(@PathVariable int id) {
-        enrollmentService.deleteEnrollment(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/course/{courseId}")
-    public ResponseEntity<List<Enrollment>> getEnrollmentsByCourse(@PathVariable int courseId) {
-        return ResponseEntity.ok(enrollmentService.getEnrollmentsByCourseId(courseId));
+    @GetMapping("/{id}")
+    public ResponseEntity<Enrollment> getEnrollmentById(@PathVariable int id) {
+        Enrollment enrollment = enrollmentService.getEnrollmentById(id);
+        return (enrollment != null) ? ResponseEntity.ok(enrollment) : ResponseEntity.notFound().build();
     }
 
     @GetMapping("/learner/{learnerId}")
@@ -37,8 +35,15 @@ public class EnrollmentController {
         return ResponseEntity.ok(enrollmentService.getEnrollmentsByLearnerId(learnerId));
     }
 
-    @GetMapping("/learner-ids/course/{courseId}")
-    public ResponseEntity<List<Integer>> getLearnerIdsByCourse(@PathVariable int courseId) {
-        return ResponseEntity.ok(enrollmentService.getAllLearnerIdsByCourseId(courseId));
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<List<Enrollment>> getEnrollmentsByCourse(@PathVariable int courseId) {
+        return ResponseEntity.ok(enrollmentService.getEnrollmentsByCourseId(courseId));
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEnrollment(@PathVariable int id) {
+        enrollmentService.deleteEnrollment(id);
+        return ResponseEntity.noContent().build();
     }
 }

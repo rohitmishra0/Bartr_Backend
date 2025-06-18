@@ -1,59 +1,60 @@
 package com.bartr.service.impl;
 
+import com.bartr.dao.CourseDao;
 import com.bartr.model.Course;
-import com.bartr.repository.CourseRepository;
 import com.bartr.service.CourseService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService {
 
-    @Autowired
-    private CourseRepository courseRepository;
+    private final CourseDao courseDao;
 
     @Override
     public Course createCourse(Course course) {
-        return courseRepository.save(course);
+        return courseDao.save(course);
     }
 
     @Override
-    public Course updateCourse(int id, Course updatedCourse) {
-        Course existing = getCourseById(id);
-        existing.setTitle(updatedCourse.getTitle());
-        existing.setDescription(updatedCourse.getDescription());
-        existing.setCategory(updatedCourse.getCategory());
-        existing.setCreator(updatedCourse.getCreator());
-        existing.setCreatedAt(updatedCourse.getCreatedAt());
-        existing.setLevel(updatedCourse.getLevel());
-        return courseRepository.save(existing);
+    public Course updateCourse(int id, Course course) {
+        Course existingCourse = courseDao.findById(id).orElse(null);
+        if (existingCourse == null) return null;
+
+        // Update fields (you can customize which fields are updatable)
+        existingCourse.setTitle(course.getTitle());
+        existingCourse.setDescription(course.getDescription());
+        existingCourse.setCategory(course.getCategory());
+        existingCourse.setCreator(course.getCreator());
+
+        return courseDao.save(existingCourse);
     }
 
     @Override
     public void deleteCourse(int id) {
-        courseRepository.deleteById(id);
+        courseDao.deleteById(id);
     }
 
     @Override
     public Course getCourseById(int id) {
-        return courseRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Course not found with id: " + id));
+        return courseDao.findById(id).orElse(null);
     }
 
     @Override
     public List<Course> getAllCourses() {
-        return courseRepository.findAll();
+        return courseDao.findAll();
     }
 
     @Override
     public List<Course> getCoursesByCreatorId(int creatorId) {
-        return courseRepository.findByCreatorId(creatorId);
+        return courseDao.findByCreatorId(creatorId);
     }
 
     @Override
     public List<Course> getCoursesByCategoryId(int categoryId) {
-        return courseRepository.findByCategoryId(categoryId);
+        return courseDao.findByCategoryId(categoryId);
     }
 }

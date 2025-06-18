@@ -3,6 +3,7 @@ package com.bartr.model;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -16,6 +17,7 @@ public class Course {
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
+	@Column(name = "course_id")
 	private int id;
 
 	@Column(nullable = false)
@@ -24,81 +26,24 @@ public class Course {
 	private String description;
 
 	@ManyToOne
-	@JoinColumn(name = "category_id", nullable = false)
+	@JoinColumn(name = "categoryId", nullable = false)
 	private Category category;
 
 	@ManyToOne
-	@JoinColumn(name = "creator_id", nullable = false)
+	@JoinColumn(name = "creatorId", nullable = false)
 	private User creator;
 
-	private LocalDateTime createdAt;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "enrollmentDate", nullable = false, updatable = false)
+	private Date createdAt;
+
+	@PrePersist
+	protected void onCreate() {
+		this.createdAt = new Date();
+	}
 
 	private String level;
 
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
 	private List<Enrollment> enrollments;
-
-	public List<Enrollment> getEnrollments() {
-		return enrollments;
-	}
-
-	public void setEnrollments(List<Enrollment> enrollments) {
-		this.enrollments = enrollments;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public User getCreator() {
-		return creator;
-	}
-
-	public void setCreator(User creator) {
-		this.creator = creator;
-	}
-
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public String getLevel() {
-		return level;
-	}
-
-	public void setLevel(String level) {
-		this.level = level;
-	}
 }

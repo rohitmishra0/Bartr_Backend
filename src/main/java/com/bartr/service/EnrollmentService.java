@@ -1,17 +1,13 @@
 package com.bartr.service;
 
 import com.bartr.model.Enrollment;
-
 import java.util.List;
 
 public interface EnrollmentService {
-    Enrollment insertEnrollment(Enrollment enrollment);
-
-    void deleteEnrollment(int enrollmentId);
-
+    List<Enrollment> getAllEnrollments();
+    Enrollment getEnrollmentById(int id);
+    List<Enrollment> getEnrollmentsByLearnerId(int learnerId);
     List<Enrollment> getEnrollmentsByCourseId(int courseId);
-
-    List<Enrollment> getEnrollmentsByLearnerId(int learner);
-
-    List<Integer> getAllLearnerIdsByCourseId(int courseId);
+    Enrollment saveEnrollment(Enrollment enrollment);
+    void deleteEnrollment(int id);
 }

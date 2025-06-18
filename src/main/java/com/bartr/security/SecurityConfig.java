@@ -4,6 +4,7 @@ import com.bartr.filter.JwtFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -33,8 +34,19 @@ public class SecurityConfig {
 
         httpSec.csrf(AbstractHttpConfigurer::disable);
         httpSec.authorizeHttpRequests(req -> req
-                .requestMatchers("api/users/register", "login").permitAll()
-                .anyRequest().authenticated());
+//                .requestMatchers("api/users/register", "login").permitAll()
+//
+//                // Admin-only endpoints
+//                .requestMatchers(HttpMethod.DELETE, "/api/categories/**").hasRole("ADMIN")
+//                .requestMatchers(HttpMethod.DELETE, "/api/enrollments/**").hasRole("ADMIN")
+//                .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasRole("ADMIN")
+//                .requestMatchers(HttpMethod.POST, "/api/categories/**").hasRole("ADMIN")
+
+
+//                .anyRequest().authenticated());
+
+        // Temporarly Permiting everyone
+                .anyRequest().permitAll());
         httpSec.cors(Customizer.withDefaults());
         httpSec.httpBasic(Customizer.withDefaults());
         httpSec.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

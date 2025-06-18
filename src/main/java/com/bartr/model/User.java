@@ -3,6 +3,9 @@ package com.bartr.model;
 import jakarta.persistence.*;
 
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
@@ -13,6 +16,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Component
+@Slf4j
 public class User {
 
 	@Id
@@ -36,7 +41,9 @@ public class User {
 	private String fullname;
 
 	@Column(name = "xp")
-	private int xp;
+	private int xp=100;
+
+
 
 	@Column(name = "avatarUrl")
 	private String avatarUrl;

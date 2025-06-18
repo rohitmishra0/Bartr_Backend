@@ -1,45 +1,56 @@
 package com.bartr.service.impl;
 
+import com.bartr.dao.CourseDao;
+import com.bartr.dao.EnrollmentDao;
+import com.bartr.dao.UserDao;
+import com.bartr.model.Course;
 import com.bartr.model.Enrollment;
-import com.bartr.repository.EnrollmentRepository;
+import com.bartr.model.User;
 import com.bartr.service.EnrollmentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class EnrollmentServiceImpl implements EnrollmentService {
 
-    @Autowired
-    private EnrollmentRepository enrollmentRepository;
+    private final EnrollmentDao enrollmentDao;
+    private final UserDao userDao;
+    private final CourseDao courseDao;
 
     @Override
-    public Enrollment insertEnrollment(Enrollment enrollment) {
-        return enrollmentRepository.save(enrollment);
+    public List<Enrollment> getAllEnrollments() {
+        return enrollmentDao.findAll();
     }
 
     @Override
-    public void deleteEnrollment(int enrollmentId) {
-        enrollmentRepository.deleteById(enrollmentId);
-    }
-
-    @Override
-    public List<Enrollment> getEnrollmentsByCourseId(int courseId) {
-        return enrollmentRepository.findByCourseId(courseId);
+    public Enrollment getEnrollmentById(int id) {
+        return enrollmentDao.findById(id).orElse(null);
     }
 
     @Override
     public List<Enrollment> getEnrollmentsByLearnerId(int learnerId) {
-        return enrollmentRepository.findByLearnerId(learnerId);
+        return userDao.findById(learnerId)
+                .map(enrollmentDao::findByLearner)
+                .orElse(List.of());
     }
 
     @Override
-    public List<Integer> getAllLearnerIdsByCourseId(int courseId) {
-        return enrollmentRepository.findByCourseId(courseId)
-                .stream()
-                .map(enrollment -> enrollment.getLearner().getId())
-                .collect(Collectors.toList());
+    public List<Enrollment> getEnrollmentsByCourseId(int courseId) {
+        return courseDao.findById(courseId)
+                .map(enrollmentDao::findByCourse)
+                .orElse(List.of());
+    }
+
+    @Override
+    public Enrollment saveEnrollment(Enrollment enrollment) {
+        return enrollmentDao.save(enrollment);
+    }
+
+    @Override
+    public void deleteEnrollment(int id) {
+        enrollmentDao.deleteById(id);
     }
 }
