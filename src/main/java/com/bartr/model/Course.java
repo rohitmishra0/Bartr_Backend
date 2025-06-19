@@ -24,6 +24,7 @@ public class Course {
 	@Column(nullable = false)
 	private String title;
 
+	@Column(nullable = false)
 	private String description;
 
 	@ManyToOne
@@ -43,7 +44,14 @@ public class Course {
 		this.createdAt = new Date();
 	}
 
+	@Column(nullable = false)
 	private String level;
+
+	@Column(nullable = false)
+	private List<String> features;
+
+	@Column(nullable = false)
+	private String features;
 
 	@Column(nullable = false)
 	private double price;

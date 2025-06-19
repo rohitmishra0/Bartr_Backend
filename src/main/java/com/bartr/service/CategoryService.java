@@ -3,6 +3,7 @@ package com.bartr.service;
 import java.util.List;
 
 import com.bartr.model.Category;
+import org.springframework.http.ResponseEntity;
 
 public interface CategoryService {
 
@@ -15,4 +16,7 @@ public interface CategoryService {
     Category getCategoryById(int id);
 
     List<Category> getAllCategories();
+
+    List<String> getAllCategoryNames();
+
 }

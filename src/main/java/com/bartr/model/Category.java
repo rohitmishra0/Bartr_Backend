@@ -26,8 +26,19 @@ public class Category {
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "xpCost")
+	@Column(name = "photoUrl")
+	private String photoUrl;
+
+	@Column(name = "xpCost", nullable = false)
 	private int xpCost;
+
+	public String getPhotoUrl() {
+		return photoUrl;
+	}
+
+	public void setPhotoUrl(String photoUrl) {
+		this.photoUrl = photoUrl;
+	}
 
 	public int getId() {
 		return id;

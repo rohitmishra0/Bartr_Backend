@@ -22,37 +22,56 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    //This should be accessible without Login Also.
     @GetMapping("")
     public ResponseEntity<List<Category>> getAllCategories(){
         List<Category> categories = categoryService.getAllCategories();
         return ResponseEntity.ok(categories);
     }
-    @PostMapping("insert/category")
+
+    //Only admin will have access for that
+    @PostMapping("insertCategory")
     public ResponseEntity<Category> createCategory(@RequestBody Category category){
         Category created = categoryService.createCategory(category);
         return ResponseEntity.status(201).body(created);
     }
 
-    @PutMapping("category/{id}")
+    //Only admin will have access for this
+    @PutMapping("updateCategory/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable int id, @RequestBody Category category) {
         Category updated = categoryService.updateCategory(id,category);
         
         return ResponseEntity.ok(updated);
     }
 
-    @DeleteMapping(("category/deleteById/{id}"))
+    //Only admin will have access for this
+    @DeleteMapping("deleteCategory/{id}")
     public ResponseEntity<Category> deleteCategory(@PathVariable int id) {
         categoryService.deleteCategory(id);
         
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("category/getByID/{id}")
+    //Accessible
+    @GetMapping("getCategoryByID/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable int id) {
         Category category = categoryService.getCategoryById(id);
         
         return ResponseEntity.ok(category);
     }
 
+
+
+
+
+
+
+
+    //This should be secured. Login Authenetication is required.
+    @GetMapping("names")
+    public ResponseEntity<List<String>> getAllCategoryNames() {
+        List<String> categoryNames = categoryService.getAllCategoryNames();
+        return ResponseEntity.ok(categoryNames);
+    }
 
 }

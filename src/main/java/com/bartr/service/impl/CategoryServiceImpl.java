@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -49,6 +50,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> getAllCategories(){
         return categoryRepository.findAll();
+    }
+
+    @Override
+    public List<String> getAllCategoryNames(){
+        return categoryRepository.findAllCategoryNames();
     }
 
 }
