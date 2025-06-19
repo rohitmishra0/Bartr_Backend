@@ -18,4 +18,5 @@ public interface CourseService {
     List<Course> getCoursesByCreatorId(int creatorId);
 
     List<Course> getCoursesByCategoryId(int categoryId);
+
 }

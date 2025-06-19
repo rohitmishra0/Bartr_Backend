@@ -5,6 +5,7 @@ import com.bartr.model.Category;
 import com.bartr.model.Course;
 import com.bartr.model.User;
 import com.bartr.repository.CategoryRepository;
+import com.bartr.repository.EnrollmentRepository;
 import com.bartr.repository.UserRepository;
 import com.bartr.service.CourseService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class CourseServiceImpl implements CourseService {
     private final CourseDao courseDao;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
+    private final EnrollmentRepository enrollmentRepository;
 
     @Override
     public Course createCourse(Course course) {
@@ -86,7 +88,13 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getAllCourses() {
-        return courseDao.findAll();
+
+        List<Course> courses= courseDao.findAll();
+        for(Course course: courses){
+            course.setEnrolledUser(course.getEnrollments().size());
+
+        }
+        return courses;
     }
 
     @Override
@@ -113,4 +121,5 @@ public class CourseServiceImpl implements CourseService {
                 throw new IllegalArgumentException("Invalid level: " + level);
         }
     }
+
 }

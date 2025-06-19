@@ -46,6 +46,9 @@ public class Course {
 	@Column
 	private String videoUrl;
 
+	@Column
+	private int enrolledUser=0;
+
 	@ManyToOne
 	@JoinColumn(name = "categoryId", nullable = false)
 	private Category category;
@@ -66,4 +69,6 @@ public class Course {
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
 	@JsonManagedReference(value = "course-enrollments")
 	private List<Enrollment> enrollments;
+
+
 }
