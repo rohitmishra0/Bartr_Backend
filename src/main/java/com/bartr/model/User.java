@@ -63,4 +63,11 @@ public class User {
 	@JsonManagedReference(value = "user-enrollments")
 	private List<Enrollment> enrollmentList;
 
+    public int getXp() {
+        return xp;
+    }
+
+	public void setXp(int xp){
+		this.xp = xp;
+	}
 }
