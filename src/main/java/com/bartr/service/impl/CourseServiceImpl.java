@@ -80,7 +80,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course getCourseById(int id) {
-        return courseDao.findById(id).orElse(null);
+        return courseDao.findById(id).orElseThrow(() -> new RuntimeException("Course not found"));
     }
 
     @Override

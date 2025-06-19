@@ -18,7 +18,7 @@ public class Course {
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
-	@Column(name = "course_id")
+	@Column(name = "courseId")
 	private int id;
 
 	@Column(nullable = false)
@@ -30,15 +30,21 @@ public class Course {
 	@Column(nullable = false)
 	private String level;
 
-	@Column(nullable = false)
+	@Column
 	private String features;
 
 	@Lob
 	@Column(nullable = false)
 	private String courseOutLine;
 
-	@Column(nullable = false)
+	@Column
 	private double price;
+
+	@Column
+	private String photoUrl;
+
+	@Column
+	private String videoUrl;
 
 	@ManyToOne
 	@JoinColumn(name = "categoryId", nullable = false)
