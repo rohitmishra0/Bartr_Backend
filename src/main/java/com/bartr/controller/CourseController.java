@@ -32,9 +32,9 @@ public class CourseController {
 
     // Delete a course only the creator can delete it
     //No option to delete a course for now. You can do iot only via backend or sql
-    @DeleteMapping("deleteCourse/{creatorId}")
-    public ResponseEntity<String> deleteCourse(@PathVariable int creatorId) {
-        courseService.deleteCourse(creatorId);
+    @DeleteMapping("deleteCourse/{id}")
+    public ResponseEntity<String> deleteCourse(@PathVariable int id) {
+        courseService.deleteCourse(id);
         return ResponseEntity.ok("Course deleted successfully.");
     }
 
