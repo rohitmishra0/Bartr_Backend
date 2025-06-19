@@ -16,7 +16,6 @@ import lombok.*;
 public class Category {
 
 	@Id
-	// Uncomment if you want the ID to be auto-generated
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
@@ -27,7 +26,7 @@ public class Category {
 	private String description;
 
 	@Column(name = "photoUrl")
-	private String photoUrl;
+	private String photoUrl="https://images.unsplash.com/photo-1746105839114-fbc9c81fcb17?q=80&w=1197&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 	@Column(name = "xpCost", nullable = false)
 	private int xpCost;

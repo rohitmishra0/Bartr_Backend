@@ -41,10 +41,10 @@ public class Course {
 	private double price;
 
 	@Column
-	private String photoUrl;
+	private String photoUrl = "https://plus.unsplash.com/premium_photo-1680553489384-8e3230dd1073?q=80&w=755&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 	@Column
-	private String videoUrl;
+	private String videoUrl = "https://www.youtube.com/watch?v=-6Yj7nscens&list=RDMMYDDjAE13oKw&index=4";
 
 	@Column
 	private int enrolledUser=0;
