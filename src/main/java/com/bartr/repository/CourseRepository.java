@@ -9,5 +9,6 @@ import java.util.List;
 public interface CourseRepository extends JpaRepository<Course, Integer> {
     // Add custom query methods if needed
     List<Course> findByCreatorId(int creatorId);
+
     List<Course> findByCategoryId(int categoryId);
 }

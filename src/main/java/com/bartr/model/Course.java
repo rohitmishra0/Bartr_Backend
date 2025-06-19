@@ -27,6 +27,19 @@ public class Course {
 	@Column(nullable = false)
 	private String description;
 
+	@Column(nullable = false)
+	private String level;
+
+	@Column(nullable = false)
+	private String features;
+
+	@Lob
+	@Column(nullable = false)
+	private String courseOutLine;
+
+	@Column(nullable = false)
+	private double price;
+
 	@ManyToOne
 	@JoinColumn(name = "categoryId", nullable = false)
 	private Category category;
@@ -43,18 +56,6 @@ public class Course {
 	protected void onCreate() {
 		this.createdAt = new Date();
 	}
-
-	@Column(nullable = false)
-	private String level;
-
-	@Column(nullable = false)
-	private List<String> features;
-
-	@Column(nullable = false)
-	private String features;
-
-	@Column(nullable = false)
-	private double price;
 
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
 	@JsonManagedReference(value = "course-enrollments")
