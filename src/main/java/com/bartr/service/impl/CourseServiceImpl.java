@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -90,11 +91,13 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getCoursesByCreatorId(int creatorId) {
+        User creator = userRepository.findById(creatorId).orElseThrow(() -> new RuntimeException("Creator not found"));;
         return courseDao.findByCreatorId(creatorId);
     }
 
     @Override
     public List<Course> getCoursesByCategoryId(int categoryId) {
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Categoty not found"));;
         return courseDao.findByCategoryId(categoryId);
     }
 
