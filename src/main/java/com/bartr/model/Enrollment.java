@@ -1,5 +1,6 @@
 package com.bartr.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,11 +17,13 @@ public class Enrollment {
 	// 🔹 Many enrollments can refer to one course
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "courseId", nullable = false)
+	@JsonBackReference(value = "course-enrollments")
 	private Course course;
 
 	// 🔹 Many enrollments can refer to one user
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "learnerId")
+	@JsonBackReference(value = "user-enrollments")
 	private User learner;
 
 	@Temporal(TemporalType.TIMESTAMP)

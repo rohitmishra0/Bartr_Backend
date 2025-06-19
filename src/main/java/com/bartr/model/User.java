@@ -1,5 +1,6 @@
 package com.bartr.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -59,6 +60,7 @@ public class User {
 
 	@OneToMany
 	@JoinColumn(name = "learnerId", referencedColumnName = "id") // maps to Enrollment.learner_id
+	@JsonManagedReference(value = "user-enrollments")
 	private List<Enrollment> enrollmentList;
 
 }

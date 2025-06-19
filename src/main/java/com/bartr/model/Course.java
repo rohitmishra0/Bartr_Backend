@@ -1,5 +1,6 @@
 package com.bartr.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -48,5 +49,6 @@ public class Course {
 	private double price;
 
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "course-enrollments")
 	private List<Enrollment> enrollments;
 }
