@@ -31,22 +31,55 @@ public class SecurityConfig {
     // main filter setting the domain to authorize and urls to check for authentication/jwt token
     @Bean
     public SecurityFilterChain customSecurityFilterChain(HttpSecurity httpSec) throws Exception {
-
         httpSec.csrf(AbstractHttpConfigurer::disable);
         httpSec.authorizeHttpRequests(req -> req
-//                .requestMatchers("api/users/register", "login").permitAll()
-//
-//                // Admin-only endpoints
-//                .requestMatchers(HttpMethod.DELETE, "/api/categories/**").hasRole("ADMIN")
-//                .requestMatchers(HttpMethod.DELETE, "/api/enrollments/**").hasRole("ADMIN")
-//                .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasRole("ADMIN")
-//                .requestMatchers(HttpMethod.POST, "/api/categories/**").hasRole("ADMIN")
+                //permit all with/without all
+                .requestMatchers(HttpMethod.GET,"api/categories").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/categories/getCategoryById/**").permitAll()
+                .requestMatchers(HttpMethod.GET,"api/courses").permitAll()
+                .requestMatchers(HttpMethod.GET,"api/courses/creator/{creatorId}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/categories/category/{categoryId}").permitAll()
+                .requestMatchers(HttpMethod.POST,"api/users/register", "login").permitAll()
+                .requestMatchers(HttpMethod.GET,"api/users/register/byEmail").permitAll()
 
 
-//                .anyRequest().authenticated());
+                // Admin-only endpoints
+                .requestMatchers(HttpMethod.POST, "/api/categories/insertCategory").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/categories/updateCategory/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/categories/deleteCategory/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/enrollments/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/categories/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/categories/updateCourse/{id}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/categories/updateCourse/{creatorId}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/enrollments/").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/enrollments/insertEnrollment").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/enrollments/learner/{learnerId}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/enrollments/course/{courseId}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/enrollments/deleteEnrollment").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/transactions").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/transactions/insert").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/transactions/{id}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/transactions/course/{courseId}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
+
+
+                //Authenticated Person
+                .requestMatchers(HttpMethod.DELETE, "/api/transactions/deleteTransaction/{id}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/categories/names").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/courses/insertCourse").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/courses/{id}").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/enrollments/{id}").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/transactions/user/{userId}").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/users/updateXP").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/users/{id}/xp").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/enrollments/insert/{userId}/{courseId}").authenticated()
+//                        .anyRequest().permitAll()
+        );
+
 
         // Temporarly Permiting everyone
-                .anyRequest().permitAll());
+//                .anyRequest().permitAll());
         httpSec.cors(Customizer.withDefaults());
         httpSec.httpBasic(Customizer.withDefaults());
         httpSec.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

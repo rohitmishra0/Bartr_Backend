@@ -18,9 +18,14 @@ public class Handler {
         return new ResponseEntity<>("Bad Credentials: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<String> handeleGenericException(Exception ex){
-//        return new ResponseEntity<>("Error Occur: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
-//    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handeleGenericException(Exception ex){
+        return new ResponseEntity<>("Error Occur: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(UserIsNotAnAdmin.class)
+    public ResponseEntity<String> handleUserIsNotAnAdmin(UserIsNotAnAdmin ex) {
+        return new ResponseEntity<>("Bad Credentials: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+}
 
 }

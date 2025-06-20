@@ -44,6 +44,9 @@ public class User {
 	@Column(name = "xp")
 	private int xp=100;
 
+	@Column(name = "role")
+	private String role = "admin";
+
 
 
 	@Column(name = "avatarUrl")
