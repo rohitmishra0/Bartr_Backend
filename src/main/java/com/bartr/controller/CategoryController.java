@@ -37,15 +37,14 @@ public class CategoryController {
     }
 
     //Only admin will have access for this
-    @PutMapping("updateCategory/{id}")
+    @PutMapping("updateCategory/{categoryId}")
     public ResponseEntity<Category> updateCategory(@PathVariable int id, @RequestBody Category category) {
         Category updated = categoryService.updateCategory(id,category);
-        
         return ResponseEntity.ok(updated);
     }
 
     //Only admin will have access for this
-    @DeleteMapping("deleteCategory/{id}")
+    @DeleteMapping("deleteCategory/{categoryId}")
     public ResponseEntity<Category> deleteCategory(@PathVariable int id) {
         categoryService.deleteCategory(id);
         
@@ -53,19 +52,12 @@ public class CategoryController {
     }
 
     //Accessible
-    @GetMapping("getCategoryByID/{id}")
+    @GetMapping("getCategoryByID/{categoryId}")
     public ResponseEntity<Category> getCategoryById(@PathVariable int id) {
         Category category = categoryService.getCategoryById(id);
         
         return ResponseEntity.ok(category);
     }
-
-
-
-
-
-
-
 
     //This should be secured. Login Authenetication is required.
     @GetMapping("names")

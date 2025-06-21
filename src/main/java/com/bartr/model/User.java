@@ -45,9 +45,7 @@ public class User {
 	private int xp=100;
 
 	@Column(name = "role")
-	private String role = "admin";
-
-
+	private String role = "ROLE_USER";
 
 	@Column(name = "avatarUrl")
 	private String avatarUrl;
