@@ -44,8 +44,8 @@ public class User {
 	@Column(name = "xp")
 	private int xp=100;
 
-	@Column(name = "role")
-	private String role = "ROLE_USER";
+	@Column(nullable = false)
+	private Role role = Role.ROLE_USER;
 
 	@Column(name = "avatarUrl")
 	private String avatarUrl;

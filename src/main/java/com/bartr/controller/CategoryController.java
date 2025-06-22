@@ -38,16 +38,16 @@ public class CategoryController {
 
     //Only admin will have access for this
     @PutMapping("updateCategory/{categoryId}")
-    public ResponseEntity<Category> updateCategory(@PathVariable int id, @RequestBody Category category) {
-        Category updated = categoryService.updateCategory(id,category);
+    public ResponseEntity<Category> updateCategory(@PathVariable int categoryId, @RequestBody Category category) {
+        Category updated = categoryService.updateCategory(categoryId,category);
         
         return ResponseEntity.ok(updated);
     }
 
     //Only admin will have access for this
     @DeleteMapping("deleteCategory/{categoryId}")
-    public ResponseEntity<Category> deleteCategory(@PathVariable int id) {
-        categoryService.deleteCategory(id);
+    public ResponseEntity<Category> deleteCategory(@PathVariable int categoryId) {
+        categoryService.deleteCategory(categoryId);
         
         return ResponseEntity.noContent().build();
     }
