@@ -31,11 +31,11 @@ public class Category {
 	@Column(name = "xpCost", nullable = false)
 	private int xpCost;
 
-	public String getPhotoUrl() {
+	public String getImageUrl() {
 		return imageUrl;
 	}
 
-	public void setPhotoUrl(String imageUrl) {
+	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
 
