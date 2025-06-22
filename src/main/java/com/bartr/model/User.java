@@ -41,6 +41,15 @@ public class User {
 	@Column(name = "fullname")
 	private String fullname;
 
+	@Column(name = "region")
+	private String region = "Chennai, India";
+
+	@Column(name = "skills")
+	private String skills ;
+
+	@Column(name = "bio")
+	private String bio = "Hi This is "+fullname ;
+
 	@Column(name = "xp")
 	private int xp=100;
 
