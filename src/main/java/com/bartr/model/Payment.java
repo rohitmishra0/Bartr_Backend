@@ -33,6 +33,11 @@ public class Payment {
 	@Column(name = "purchasedAt")
 	private Date purchasedAt;
 
+	@PrePersist
+	protected void onCreate() {
+		this.purchasedAt = new Date();
+	}
+
 	public int getId() {
 		return id;
 	}
