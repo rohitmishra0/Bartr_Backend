@@ -23,7 +23,7 @@ public class TransactionController {
     }
 
     // 🔹 Get all transactions
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<List<Transaction>> getAllTransactions() {
         return ResponseEntity.ok(transactionService.getAllTransactions());
     }

@@ -1,6 +1,7 @@
 package com.bartr.service.impl;
 
 import com.bartr.dao.UserDao; // Import the concrete UserDao class
+import com.bartr.model.Role;
 import com.bartr.model.User;
 import com.bartr.security.JwtUtil;
 import com.bartr.service.UserService;
@@ -45,6 +46,8 @@ public class UserServiceImpl implements UserService {
         if (user.getXp() == 0) {
             user.setXp(0);
         }
+
+//        user.setRole(Role.ROLE_USER);
 
         // Delegate save operation to UserDao
         return userDao.save(user);

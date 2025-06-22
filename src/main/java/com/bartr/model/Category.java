@@ -25,18 +25,18 @@ public class Category {
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "photoUrl")
-	private String photoUrl="https://images.unsplash.com/photo-1746105839114-fbc9c81fcb17?q=80&w=1197&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+	@Column(name = "imageUrl")
+	private String imageUrl="https://images.unsplash.com/photo-1746105839114-fbc9c81fcb17?q=80&w=1197&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 	@Column(name = "xpCost", nullable = false)
 	private int xpCost;
 
-	public String getPhotoUrl() {
-		return photoUrl;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
-	public void setPhotoUrl(String photoUrl) {
-		this.photoUrl = photoUrl;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	public int getId() {
