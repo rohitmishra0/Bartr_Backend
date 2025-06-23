@@ -79,6 +79,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/users/updateXP").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/users/{id}/xp").authenticated()
 
+                        .requestMatchers(HttpMethod.GET,"/me").permitAll()
+
 
                         // Login
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
