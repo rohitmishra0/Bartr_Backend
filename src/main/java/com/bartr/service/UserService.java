@@ -22,5 +22,7 @@ public interface UserService {
 
     List<User> getAllUser();
 
+    User updateUser(int id, User updatedUser);
+
 
 }

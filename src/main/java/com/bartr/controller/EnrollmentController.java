@@ -1,5 +1,6 @@
 package com.bartr.controller;
 
+import com.bartr.model.Course;
 import com.bartr.model.Enrollment;
 import com.bartr.service.EnrollmentService;
 import lombok.RequiredArgsConstructor;
@@ -50,5 +51,17 @@ public class EnrollmentController {
     public ResponseEntity<Void> deleteEnrollment(@PathVariable int id) {
         enrollmentService.deleteEnrollment(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{learnerId}/courses")
+    public ResponseEntity<?> getEnrolledCoursesForLearner(@PathVariable int learnerId) {
+
+            List<Course> courses = enrollmentService.getCoursesEnrolledByLearnerId(learnerId);
+            if (courses.isEmpty()) {
+                // If the learner exists but has no enrollments
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(courses);
+
     }
 }

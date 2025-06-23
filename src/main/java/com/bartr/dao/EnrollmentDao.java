@@ -39,4 +39,5 @@ public class EnrollmentDao {
     public void deleteById(int id) {
         enrollmentRepository.deleteById(id);
     }
+    public List<Course> findCoursesByLearnerId(int learnerId){ return enrollmentRepository.findCoursesByLearnerId(learnerId);}
 }
