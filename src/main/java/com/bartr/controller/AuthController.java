@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -30,6 +31,7 @@ public class AuthController {
     @GetMapping("/me")
     public ResponseEntity<?> getMyUsername(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+//        Optional<User> user = userService.getUserByUsername(username);
         return ResponseEntity.ok(username);
     }
 
