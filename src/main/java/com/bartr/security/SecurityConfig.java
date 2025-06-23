@@ -34,7 +34,7 @@ public class SecurityConfig {
         httpSec.csrf(AbstractHttpConfigurer::disable);
         httpSec.authorizeHttpRequests(req -> req
                         //Category
-                        .requestMatchers(HttpMethod.GET,"api/categories").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/categories").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/categories/insertCategory").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/categories/updateCategory/{categoryId}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/categories/deleteCategory/{categoryId}").hasRole("ADMIN")
@@ -48,7 +48,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/courses/deleteCourse/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/courses/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/courses/creator/{creatorId}").permitAll()
-                        .requestMatchers(HttpMethod.GET,"api/courses/category/{categoryId}").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/courses/category/{categoryId}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categories/getCategoryById/**").permitAll()
 
 

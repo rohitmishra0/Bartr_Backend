@@ -60,6 +60,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> getUserByUsername(String username){
+        return userDao.findByUsername(username);
+    }
+
+    @Override
     @Transactional
     public void updateXP(int userId, int xpChange) {
         // Find user via DAO, then update and save via DAO
@@ -106,4 +111,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encoder.encode(newPassword));
         userDao.save(user); // Delegate save for update
     }
+
+
+
 }
