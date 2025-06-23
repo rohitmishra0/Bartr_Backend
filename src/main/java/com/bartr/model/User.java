@@ -41,11 +41,20 @@ public class User {
 	@Column(name = "fullname")
 	private String fullname;
 
+	@Column(name = "region")
+	private String region = "Chennai, India";
+
+	@Column(name = "skills")
+	private String skills ;
+
+	@Column(name = "bio")
+	private String bio = "Hi This is "+getFullname() ;
+
 	@Column(name = "xp")
 	private int xp=100;
 
-	@Column(name = "role")
-	private String role = "ROLE_USER";
+	@Column(nullable = false)
+	private Role role = Role.ROLE_USER;
 
 	@Column(name = "avatarUrl")
 	private String avatarUrl;
@@ -64,4 +73,11 @@ public class User {
 	@JsonManagedReference(value = "user-enrollments")
 	private List<Enrollment> enrollmentList;
 
+    public int getXp() {
+        return xp;
+    }
+
+	public void setXp(int xp){
+		this.xp = xp;
+	}
 }

@@ -1,6 +1,8 @@
 package com.bartr.service.impl;
 
 import com.bartr.dao.UserDao; // Import the concrete UserDao class
+import com.bartr.exception.UsernameAlreadyExistsException;
+import com.bartr.model.Role;
 import com.bartr.model.User;
 import com.bartr.security.JwtUtil;
 import com.bartr.service.UserService;
@@ -32,12 +34,12 @@ public class UserServiceImpl implements UserService {
         // Business logic remains in service, but persistence delegated to DAO
         Optional<User> existingUserByEmail = userDao.findByEmail(user.getEmail());
         if (existingUserByEmail.isPresent()) {
-            throw new RuntimeException("User already registered with email: " + user.getEmail());
+            throw new UsernameAlreadyExistsException("User already registered with email: " + user.getEmail());
         }
 
         Optional<User> existingUserByUsername = userDao.findByUsername(user.getUsername());
         if (existingUserByUsername.isPresent()) {
-            throw new RuntimeException("User already registered with username: " + user.getUsername());
+            throw new UsernameAlreadyExistsException("User already registered with username: " + user.getUsername());
         }
 
         user.setPassword(encoder.encode(user.getPassword()));
@@ -45,6 +47,8 @@ public class UserServiceImpl implements UserService {
         if (user.getXp() == 0) {
             user.setXp(0);
         }
+
+//        user.setRole(Role.ROLE_USER);
 
         // Delegate save operation to UserDao
         return userDao.save(user);
@@ -54,6 +58,11 @@ public class UserServiceImpl implements UserService {
     public Optional<User> getUserByEmail(String email) {
         // Delegate find operation to UserDao
         return userDao.findByEmail(email);
+    }
+
+    @Override
+    public Optional<User> getUserByUsername(String username){
+        return userDao.findByUsername(username);
     }
 
     @Override
@@ -86,6 +95,7 @@ public class UserServiceImpl implements UserService {
         try {
             authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
             UserDetails userDetails = userAuthService.loadUserByUsername(user.getUsername());
+            System.out.println(userDetails);
             String token = jwt.generateToken(userDetails.getUsername(), userDetails.getAuthorities().toString());
             return token;
         } catch (Exception e) {
@@ -102,4 +112,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encoder.encode(newPassword));
         userDao.save(user); // Delegate save for update
     }
+
+
+
 }

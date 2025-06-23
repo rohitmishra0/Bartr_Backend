@@ -14,7 +14,7 @@ public interface UserService {
     Optional<User> getUserByEmail(String email);
 
     String jwtLogin(User user);
-
+    Optional<User> getUserByUsername(String username);
 
     public void updateXP(int userId, int xpChange);
 

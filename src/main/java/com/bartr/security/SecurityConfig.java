@@ -33,55 +33,61 @@ public class SecurityConfig {
     public SecurityFilterChain customSecurityFilterChain(HttpSecurity httpSec) throws Exception {
         httpSec.csrf(AbstractHttpConfigurer::disable);
         httpSec.authorizeHttpRequests(req -> req
-                    //Category
-                    .requestMatchers(HttpMethod.GET,"api/categories").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/api/categories/insertCategory").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.PUT, "/api/categories/updateCategory/{categoryId}").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.DELETE, "/api/categories/deleteCategory/{categoryId}").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET, "/api/categories/getCategoryByID/{categoryId}").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/categories/names").permitAll()
+                        //Category
+                        .requestMatchers(HttpMethod.GET,"/api/categories").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/categories/insertCategory").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/categories/updateCategory/{categoryId}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/categories/deleteCategory/{categoryId}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/categories/getCategoryByID/{categoryId}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/categories/names").permitAll()
 
-                    //Course
-                    .requestMatchers(HttpMethod.GET,"/api/courses").permitAll()
-                    .requestMatchers(HttpMethod.POST,"/api/courses/insertCourse").authenticated()
-                    .requestMatchers(HttpMethod.PUT,"/api/courses/updateCourse/{id}").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.DELETE, "/api/courses/deleteCourse/{id}").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET, "/api/courses/{id}").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/courses/creator/{creatorId}").permitAll()
-                    .requestMatchers(HttpMethod.GET,"api/courses/category/{categoryId}").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/categories/getCategoryById/**").permitAll()
+                        //Course
+                        .requestMatchers(HttpMethod.GET,"/api/courses").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/courses/insertCourse").authenticated()
+                        .requestMatchers(HttpMethod.PUT,"/api/courses/updateCourse/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/courses/deleteCourse/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/courses/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/courses/creator/{creatorId}").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/courses/category/{categoryId}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/categories/getCategoryById/**").permitAll()
 
 
 //                  //Enrollments
-                    .requestMatchers(HttpMethod.POST, "/api/enrollments/insert").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.POST, "/api/enrollments/insert/{userId}/{courseId}").authenticated()
-                    .requestMatchers(HttpMethod.GET, "/api/enrollments").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/enrollments/{id}").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET, "/api/enrollments/learner/{learnerId}").authenticated()
-                    .requestMatchers(HttpMethod.GET, "/api/enrollments/course/{courseId}").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.DELETE, "/api/enrollments/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/enrollments/insert").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/enrollments/insert/{userId}/{courseId}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/enrollments").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/enrollments/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/enrollments/learner/{learnerId}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/enrollments/course/{courseId}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/enrollments/{id}").hasRole("ADMIN")
 
 
-                    //Transactions
-                    .requestMatchers(HttpMethod.GET, "/api/transactions").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.POST, "/api/transactions/insert").authenticated()
-                    .requestMatchers(HttpMethod.GET, "/api/transactions/{id}").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET, "/api/transactions/user/{userId}").authenticated()
-                    .requestMatchers(HttpMethod.GET, "/api/transactions/course/{courseId}").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET, "/api/transactions").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.DELETE, "/api/transactions/{id}").hasRole("ADMIN")
+                        //Transactions
+                        .requestMatchers(HttpMethod.GET, "/api/transactions").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/transactions/insert").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/transactions/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/transactions/user/{userId}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/transactions/course/{courseId}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/transactions").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/transactions/{id}").hasRole("ADMIN")
 
 
-                    //User
-                    .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/users/byEmail").permitAll()
-                    .requestMatchers(HttpMethod.PUT, "/api/users/updateXP").authenticated()
-                    .requestMatchers(HttpMethod.GET, "/api/users/{id}/xp").authenticated()
+                        //User
+                        .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/users/byEmail").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/users/updateXP").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/users/{id}/xp").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/users/byUsername").permitAll()
 
 
-                // Login
-                    .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/me").permitAll()
+
+
+                        // Login
+                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
+
+//                        .anyRequest().permitAll()
         );
 
         httpSec.cors(Customizer.withDefaults());

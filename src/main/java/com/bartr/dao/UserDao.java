@@ -32,6 +32,8 @@ public class UserDao {
         return userRepository.findByUsername(username);
     }
 
+
+
     public List<User> findAll() {
         return userRepository.findAll();
     }
