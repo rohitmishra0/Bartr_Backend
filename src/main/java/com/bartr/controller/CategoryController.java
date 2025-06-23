@@ -54,8 +54,8 @@ public class CategoryController {
 
     //Accessible
     @GetMapping("getCategoryByID/{categoryId}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable int id) {
-        Category category = categoryService.getCategoryById(id);
+    public ResponseEntity<Category> getCategoryById(@PathVariable int categoryId) {
+        Category category = categoryService.getCategoryById(categoryId);
         
         return ResponseEntity.ok(category);
     }
