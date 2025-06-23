@@ -18,7 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-@Slf4j
 public class User {
 
 	@Id
