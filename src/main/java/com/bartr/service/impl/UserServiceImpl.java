@@ -94,6 +94,7 @@ public class UserServiceImpl implements UserService {
         try {
             authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
             UserDetails userDetails = userAuthService.loadUserByUsername(user.getUsername());
+            System.out.println(userDetails);
             String token = jwt.generateToken(userDetails.getUsername(), userDetails.getAuthorities().toString());
             return token;
         } catch (Exception e) {
