@@ -92,7 +92,6 @@ public class CourseServiceImpl implements CourseService {
         List<Course> courses= courseDao.findAll();
         for(Course course: courses){
             course.setEnrolledUser(course.getEnrollments().size());
-
         }
         return courses;
     }
