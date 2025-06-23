@@ -34,6 +34,13 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/byUsername")
+    public ResponseEntity<User> getUserByUsername(@RequestParam String username) {
+        Optional<User> user = userService.getUserByUsername(username);
+        return user.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     // 🔹 Update XP for user
     @PutMapping("/updateXP")
     public ResponseEntity<String> updateUserXp(@RequestParam int userId, @RequestParam int xpChange) {
