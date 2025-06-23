@@ -1,6 +1,7 @@
 package com.bartr.service.impl;
 
 import com.bartr.dao.UserDao; // Import the concrete UserDao class
+import com.bartr.exception.UsernameAlreadyExistsException;
 import com.bartr.model.Role;
 import com.bartr.model.User;
 import com.bartr.security.JwtUtil;
@@ -33,12 +34,12 @@ public class UserServiceImpl implements UserService {
         // Business logic remains in service, but persistence delegated to DAO
         Optional<User> existingUserByEmail = userDao.findByEmail(user.getEmail());
         if (existingUserByEmail.isPresent()) {
-            throw new RuntimeException("User already registered with email: " + user.getEmail());
+            throw new UsernameAlreadyExistsException("User already registered with email: " + user.getEmail());
         }
 
         Optional<User> existingUserByUsername = userDao.findByUsername(user.getUsername());
         if (existingUserByUsername.isPresent()) {
-            throw new RuntimeException("User already registered with username: " + user.getUsername());
+            throw new UsernameAlreadyExistsException("User already registered with username: " + user.getUsername());
         }
 
         user.setPassword(encoder.encode(user.getPassword()));
