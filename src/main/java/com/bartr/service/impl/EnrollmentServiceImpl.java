@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -108,5 +110,14 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         enrollmentDao.deleteById(id);
     }
 
+    public List<Course> getCoursesEnrolledByLearnerId(int learnerId) {
+        Optional<User> learner = userRepository.findById(learnerId);
+        if (learner.isEmpty()) {
+            throw new RuntimeException("Learner with ID " + learnerId + " not found.");
+        }
+
+        // Use the custom query from EnrollmentRepository to directly fetch courses
+        return enrollmentDao.findCoursesByLearnerId(learnerId);
+    }
 
 }

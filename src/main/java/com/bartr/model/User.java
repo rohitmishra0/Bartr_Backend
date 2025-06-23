@@ -48,7 +48,7 @@ public class User {
 	private String skills ;
 
 	@Column(name = "bio")
-	private String bio = "Hi This is "+getFullname() ;
+	private String bio = "This is a sample bio" ;
 
 	@Column(name = "xp")
 	private int xp=100;

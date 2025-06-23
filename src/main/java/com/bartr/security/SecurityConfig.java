@@ -56,6 +56,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/enrollments/insert").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/enrollments/insert/{userId}/{courseId}").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/enrollments").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/enrollments/{learnerId}/courses").authenticated()
+
                         .requestMatchers(HttpMethod.GET, "/api/enrollments/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/enrollments/learner/{learnerId}").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/enrollments/course/{courseId}").hasRole("ADMIN")
@@ -75,6 +77,7 @@ public class SecurityConfig {
                         //User
                         .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/api/users/update/{id}").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/users/byEmail").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/users/updateXP").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/users/{id}/xp").authenticated()
