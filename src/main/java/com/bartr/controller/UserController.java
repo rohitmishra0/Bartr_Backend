@@ -62,7 +62,7 @@ public class UserController {
     }
 
 
-    @PatchMapping("/update/{id}") // Maps to /api/users/{id}
+    @PutMapping("/update/{id}") // Maps to /api/users/{id}
     public ResponseEntity<?> updateUser(@PathVariable("id") int id, @RequestBody User userDetails) {
 
             // The service method is designed to handle partial updates by checking for non-null/non-empty fields
