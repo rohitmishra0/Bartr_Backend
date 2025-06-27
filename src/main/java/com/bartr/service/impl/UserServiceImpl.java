@@ -1,6 +1,7 @@
 package com.bartr.service.impl;
 
 import com.bartr.dao.UserDao; // Import the concrete UserDao class
+import com.bartr.exception.InvalidPasswordException;
 import com.bartr.exception.UserNameNotFoundException;
 import com.bartr.exception.UsernameAlreadyExistsException;
 import com.bartr.model.Role;
@@ -138,6 +139,19 @@ public class UserServiceImpl implements UserService {
 
         // Save and return the updated user entity
         return userDao.save(existingUser);
+    }
+
+
+    public boolean changePassword(int userId,String currentPassword,String newPassword){
+        User user= userDao.findById(userId)
+                .orElseThrow(() -> new UserNameNotFoundException("User not found with ID: " + userId));
+        if (!encoder.matches(currentPassword,user.getPassword())){
+            throw new InvalidPasswordException("Current password is incorrect");
+        }
+
+        user.setPassword(encoder.encode(newPassword));
+        userDao.save(user);
+        return true;
     }
 
 

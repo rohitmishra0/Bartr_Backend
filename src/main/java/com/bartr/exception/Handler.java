@@ -44,4 +44,18 @@ public class Handler {
         Map<String, Object> response = createResponse("Forbidden: " + ex.getMessage(), HttpStatus.FORBIDDEN);
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<Map<String, Object>> hadleInvalidPassword(Exception ex) {
+        Map<String, Object> response = createResponse("Error Occurred: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserAlreadyEnrolledException.class)
+    public ResponseEntity<Map<String, Object>> hadleAlreadyEnrolled(Exception ex) {
+        Map<String, Object> response = createResponse("Error Occurred: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+
 }

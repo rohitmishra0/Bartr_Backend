@@ -53,15 +53,16 @@ public class SecurityConfig {
 
 
 //                  //Enrollments
+                        .requestMatchers(HttpMethod.GET, "/api/enrollments/isEnrolled").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/enrollments/insert").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/enrollments/insert/{userId}/{courseId}").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/enrollments").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/enrollments/{learnerId}/courses").authenticated()
-
                         .requestMatchers(HttpMethod.GET, "/api/enrollments/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/enrollments/learner/{learnerId}").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/enrollments/course/{courseId}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/enrollments/{id}").hasRole("ADMIN")
+
 
 
                         //Transactions
@@ -82,6 +83,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/users/updateXP").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/users/{id}/xp").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/users/byUsername").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/api/users/changePassword/{userId}").authenticated()
 
 
                         .requestMatchers(HttpMethod.GET,"/me").permitAll()

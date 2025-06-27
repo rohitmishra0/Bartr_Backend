@@ -71,6 +71,15 @@ public class UserController {
 
     }
 
+    @PatchMapping("/changePassword/{userId}")
+    public ResponseEntity<?> changePassword(@PathVariable("userId") int userId, @RequestParam String currentPassword, @RequestParam String newPassword) {
+        boolean updated= userService.changePassword(userId,currentPassword,newPassword);
+        return ResponseEntity.ok("Password updated successfully");
+
+    }
+
+
+
 
 
 }

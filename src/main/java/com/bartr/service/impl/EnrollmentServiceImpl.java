@@ -3,6 +3,7 @@ package com.bartr.service.impl;
 import com.bartr.dao.CourseDao;
 import com.bartr.dao.EnrollmentDao;
 import com.bartr.dao.UserDao;
+import com.bartr.exception.UserAlreadyEnrolledException;
 import com.bartr.model.Course;
 import com.bartr.model.Enrollment;
 import com.bartr.model.Transaction;
@@ -32,6 +33,10 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public Enrollment enroll(int userId, int courseId) {
+        boolean isEnrolled = isUserEnrolled(userId,courseId);
+        if(isEnrolled){
+            throw new UserAlreadyEnrolledException("User is already enrolled into the course");
+        }
         User learner = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -119,5 +124,13 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         // Use the custom query from EnrollmentRepository to directly fetch courses
         return enrollmentDao.findCoursesByLearnerId(learnerId);
     }
+
+    public boolean isUserEnrolled(int learnerId, int courseId){
+        System.out.println("sfsjvsjvnaj");
+        return enrollmentDao.existsByLearnerIdAndCourseId(learnerId,courseId);
+    }
+
+
+
 
 }
