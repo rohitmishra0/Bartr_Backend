@@ -1,6 +1,7 @@
 package com.bartr.service.impl;
 
 import com.bartr.dao.UserDao; // Import the concrete UserDao class
+import com.bartr.exception.InvalidPasswordException;
 import com.bartr.exception.UserNameNotFoundException;
 import com.bartr.exception.UsernameAlreadyExistsException;
 import com.bartr.model.Role;
@@ -114,30 +115,17 @@ public class UserServiceImpl implements UserService {
         userDao.save(user); // Delegate save for update
     }
 
-    public User updateUser(int id, User updatedUser) throws UserNameNotFoundException, UsernameAlreadyExistsException {
+    public User updateUser(int id, User updatedUser) throws UserNameNotFoundException {
+        // Retrieve the existing user from the database
         User existingUser = userDao.findById(id)
                 .orElseThrow(() -> new UserNameNotFoundException("User not found with ID: " + id));
 
-        // Update username if provided and different from current, checking for uniqueness
-        if (updatedUser.getUsername() != null && !updatedUser.getUsername().isEmpty() &&
-                !existingUser.getUsername().equals(updatedUser.getUsername())) {
-            // ... uniqueness check and update ...
-            existingUser.setUsername(updatedUser.getUsername());
-        }
-
-        // Update email if provided and different from current, checking for uniqueness
-        if (updatedUser.getEmail() != null && !updatedUser.getEmail().isEmpty() &&
-                !existingUser.getEmail().equals(updatedUser.getEmail())) {
-            // ... uniqueness check and update ...
-            existingUser.setEmail(updatedUser.getEmail());
-        }
-
-        // This is the key for PATCH: only update if the new value is provided and not empty
-        if (updatedUser.getPhone() != null && !updatedUser.getPhone().isEmpty()) {
-            existingUser.setPhone(updatedUser.getPhone());
-        }
+        // Only update mutable fields (immutable fields like 'username', 'email', etc., are excluded from form and ignored)
         if (updatedUser.getFullname() != null && !updatedUser.getFullname().isEmpty()) {
             existingUser.setFullname(updatedUser.getFullname());
+        }
+        if (updatedUser.getPhone() != null && !updatedUser.getPhone().isEmpty()) {
+            existingUser.setPhone(updatedUser.getPhone());
         }
         if (updatedUser.getRegion() != null && !updatedUser.getRegion().isEmpty()) {
             existingUser.setRegion(updatedUser.getRegion());
@@ -148,12 +136,22 @@ public class UserServiceImpl implements UserService {
         if (updatedUser.getBio() != null && !updatedUser.getBio().isEmpty()) {
             existingUser.setBio(updatedUser.getBio());
         }
-        if (updatedUser.getAvatarUrl() != null && !updatedUser.getAvatarUrl().isEmpty()) {
-            existingUser.setAvatarUrl(updatedUser.getAvatarUrl());
-        }
-        // ... (password and role notes remain the same)
 
+        // Save and return the updated user entity
         return userDao.save(existingUser);
+    }
+
+
+    public boolean changePassword(int userId,String currentPassword,String newPassword){
+        User user= userDao.findById(userId)
+                .orElseThrow(() -> new UserNameNotFoundException("User not found with ID: " + userId));
+        if (!encoder.matches(currentPassword,user.getPassword())){
+            throw new InvalidPasswordException("Current password is incorrect");
+        }
+
+        user.setPassword(encoder.encode(newPassword));
+        userDao.save(user);
+        return true;
     }
 
 

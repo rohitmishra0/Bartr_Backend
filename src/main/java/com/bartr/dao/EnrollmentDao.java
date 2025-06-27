@@ -40,4 +40,7 @@ public class EnrollmentDao {
         enrollmentRepository.deleteById(id);
     }
     public List<Course> findCoursesByLearnerId(int learnerId){ return enrollmentRepository.findCoursesByLearnerId(learnerId);}
+    public boolean existsByLearnerIdAndCourseId(int learnerId, int courseId){
+        return enrollmentRepository.existsByLearnerIdAndCourseId(learnerId,courseId);
+    }
 }

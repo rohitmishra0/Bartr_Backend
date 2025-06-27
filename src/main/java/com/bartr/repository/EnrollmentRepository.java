@@ -19,4 +19,5 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Integer>
     List<Course> findCoursesByLearnerId(@Param("learnerId") int learnerId);
 
 
+    boolean existsByLearnerIdAndCourseId(int learnerId, int courseId);
 }
