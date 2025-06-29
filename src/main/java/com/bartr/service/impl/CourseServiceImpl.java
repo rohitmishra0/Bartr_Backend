@@ -99,8 +99,13 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getCoursesByCreatorId(int creatorId) {
-        User creator = userRepository.findById(creatorId).orElseThrow(() -> new RuntimeException("Creator not found"));;
-        return courseDao.findByCreatorId(creatorId);
+        User creator = userRepository.findById(creatorId).orElseThrow(() -> new RuntimeException("Creator not found"));
+        List<Course> courses = courseDao.findByCreatorId(creatorId);
+        for(Course course: courses){
+            course.setEnrolledUser(course.getEnrollments().size());
+
+        }
+        return courses;
     }
 
     @Override

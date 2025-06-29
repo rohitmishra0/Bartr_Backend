@@ -117,7 +117,12 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         }
 
         // Use the custom query from EnrollmentRepository to directly fetch courses
-        return enrollmentDao.findCoursesByLearnerId(learnerId);
+        List<Course> courses = enrollmentDao.findCoursesByLearnerId(learnerId);
+        for(Course course: courses){
+            course.setEnrolledUser(course.getEnrollments().size());
+
+        }
+        return courses;
     }
 
 }
