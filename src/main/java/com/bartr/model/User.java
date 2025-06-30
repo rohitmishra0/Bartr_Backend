@@ -58,6 +58,9 @@ public class User {
 	@Column(name = "avatarUrl")
 	private String avatarUrl;
 
+	@Column(name = "responseTime")
+	private int responseTime;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "createdAt")
 	private Date createdAt;
