@@ -137,6 +137,8 @@ public class UserServiceImpl implements UserService {
             existingUser.setBio(updatedUser.getBio());
         }
 
+
+
         // Save and return the updated user entity
         return userRepository.save(existingUser);
     }

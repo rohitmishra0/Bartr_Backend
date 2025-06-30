@@ -85,6 +85,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/users/byUsername").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/api/users/changePassword/{userId}").authenticated()
 
+                        .requestMatchers(HttpMethod.GET, "/api/search").permitAll()
+
 
                         .requestMatchers(HttpMethod.GET,"/me").permitAll()
 
