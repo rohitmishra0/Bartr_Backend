@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -64,4 +65,13 @@ public class EnrollmentController {
             return ResponseEntity.ok(courses);
 
     }
+
+    @GetMapping("/isEnrolled")
+    public ResponseEntity<?> isEnrolled(@RequestParam int learnerId, @RequestParam int courseId){
+        System.out.println("sfsjdcbgydVCJFWgevdcgdfvxgfwVcxdfQVCWTDXCQWtjgjvnaj");
+        boolean isEnrolled = enrollmentService.isUserEnrolled(learnerId,courseId);
+        return ResponseEntity.ok(isEnrolled);
+    }
+
+
 }

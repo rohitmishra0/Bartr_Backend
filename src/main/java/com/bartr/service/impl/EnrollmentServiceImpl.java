@@ -1,13 +1,13 @@
 package com.bartr.service.impl;
 
-import com.bartr.dao.CourseDao;
-import com.bartr.dao.EnrollmentDao;
-import com.bartr.dao.UserDao;
+
+import com.bartr.exception.UserAlreadyEnrolledException;
 import com.bartr.model.Course;
 import com.bartr.model.Enrollment;
 import com.bartr.model.Transaction;
 import com.bartr.model.User;
 import com.bartr.repository.CourseRepository;
+import com.bartr.repository.EnrollmentRepository;
 import com.bartr.repository.TransactionRepository;
 import com.bartr.repository.UserRepository;
 import com.bartr.service.EnrollmentService;
@@ -23,15 +23,18 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EnrollmentServiceImpl implements EnrollmentService {
 
-    private final EnrollmentDao enrollmentDao;
-    private final UserDao userDao;
-    private final CourseDao courseDao;
+    private final EnrollmentRepository enrollmentRepository;
+
+    private final CourseRepository courseRepository;
     private final UserRepository userRepository;
     private final TransactionRepository transactionRepository ;
-    private final CourseRepository courseRepository;
 
     @Override
     public Enrollment enroll(int userId, int courseId) {
+        boolean isEnrolled = isUserEnrolled(userId,courseId);
+        if(isEnrolled){
+            throw new UserAlreadyEnrolledException("User is already enrolled into the course");
+        }
         User learner = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -72,42 +75,42 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         enrollment.setCourse(course);
         enrollment.setLearner(learner);
 
-        return enrollmentDao.save(enrollment);
+        return enrollmentRepository.save(enrollment);
     }
 
 
     @Override
     public List<Enrollment> getAllEnrollments() {
-        return enrollmentDao.findAll();
+        return enrollmentRepository.findAll();
     }
 
     @Override
     public Enrollment getEnrollmentById(int id) {
-        return enrollmentDao.findById(id).orElse(null);
+        return enrollmentRepository.findById(id).orElse(null);
     }
 
     @Override
     public List<Enrollment> getEnrollmentsByLearnerId(int learnerId) {
-        return userDao.findById(learnerId)
-                .map(enrollmentDao::findByLearner)
+        return userRepository.findById(learnerId)
+                .map(enrollmentRepository::findByLearner)
                 .orElse(List.of());
     }
 
     @Override
     public List<Enrollment> getEnrollmentsByCourseId(int courseId) {
-        return courseDao.findById(courseId)
-                .map(enrollmentDao::findByCourse)
+        return courseRepository.findById(courseId)
+                .map(enrollmentRepository::findByCourse)
                 .orElse(List.of());
     }
 
     @Override
     public Enrollment saveEnrollment(Enrollment enrollment) {
-        return enrollmentDao.save(enrollment);
+        return enrollmentRepository.save(enrollment);
     }
 
     @Override
     public void deleteEnrollment(int id) {
-        enrollmentDao.deleteById(id);
+        enrollmentRepository.deleteById(id);
     }
 
     public List<Course> getCoursesEnrolledByLearnerId(int learnerId) {
@@ -117,12 +120,15 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         }
 
         // Use the custom query from EnrollmentRepository to directly fetch courses
-        List<Course> courses = enrollmentDao.findCoursesByLearnerId(learnerId);
-        for(Course course: courses){
-            course.setEnrolledUser(course.getEnrollments().size());
-
-        }
-        return courses;
+        return enrollmentRepository.findCoursesByLearnerId(learnerId);
     }
+
+    public boolean isUserEnrolled(int learnerId, int courseId){
+        System.out.println("sfsjvsjvnaj");
+        return enrollmentRepository.existsByLearnerIdAndCourseId(learnerId,courseId);
+    }
+
+
+
 
 }

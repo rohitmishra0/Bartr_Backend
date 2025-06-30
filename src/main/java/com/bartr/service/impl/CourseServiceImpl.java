@@ -1,10 +1,10 @@
 package com.bartr.service.impl;
 
-import com.bartr.dao.CourseDao;
 import com.bartr.model.Category;
 import com.bartr.model.Course;
 import com.bartr.model.User;
 import com.bartr.repository.CategoryRepository;
+import com.bartr.repository.CourseRepository;
 import com.bartr.repository.EnrollmentRepository;
 import com.bartr.repository.UserRepository;
 import com.bartr.service.CourseService;
@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService {
 
-    private final CourseDao courseDao;
+    private final CourseRepository courseRepository;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
     private final EnrollmentRepository enrollmentRepository;
@@ -41,14 +41,14 @@ public class CourseServiceImpl implements CourseService {
         double price = category.getXpCost() * multiplier;
         course.setPrice(price);
 
-        return courseDao.save(course);
+        return courseRepository.save(course);
     }
 
     @Override
     public Course updateCourse(int id, Course updatedCourse) {
 
 
-        Course existing = courseDao.findById(id)
+        Course existing = courseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
         existing.setTitle(updatedCourse.getTitle());
@@ -73,45 +73,39 @@ public class CourseServiceImpl implements CourseService {
         existing.setPrice(price);
 
        
-        return courseDao.save(existing);
+        return courseRepository.save(existing);
     }
 
     @Override
     public void deleteCourse(int id) {
-        courseDao.deleteById(id);
+        courseRepository.deleteById(id);
     }
 
     @Override
     public Course getCourseById(int id) {
-        return courseDao.findById(id).orElseThrow(() -> new RuntimeException("Course not found"));
+        return courseRepository.findById(id).orElseThrow(() -> new RuntimeException("Course not found"));
     }
 
     @Override
     public List<Course> getAllCourses() {
 
-        List<Course> courses= courseDao.findAll();
+        List<Course> courses= courseRepository.findAll();
         for(Course course: courses){
             course.setEnrolledUser(course.getEnrollments().size());
-
         }
         return courses;
     }
 
     @Override
     public List<Course> getCoursesByCreatorId(int creatorId) {
-        User creator = userRepository.findById(creatorId).orElseThrow(() -> new RuntimeException("Creator not found"));
-        List<Course> courses = courseDao.findByCreatorId(creatorId);
-        for(Course course: courses){
-            course.setEnrolledUser(course.getEnrollments().size());
-
-        }
-        return courses;
+        User creator = userRepository.findById(creatorId).orElseThrow(() -> new RuntimeException("Creator not found"));;
+        return courseRepository.findByCreatorId(creatorId);
     }
 
     @Override
     public List<Course> getCoursesByCategoryId(int categoryId) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Categoty not found"));;
-        return courseDao.findByCategoryId(categoryId);
+        return courseRepository.findByCategoryId(categoryId);
     }
 
     private double getLevelMultiplier(String level) {

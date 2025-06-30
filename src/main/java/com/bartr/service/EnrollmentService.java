@@ -13,4 +13,5 @@ public interface EnrollmentService {
     Enrollment saveEnrollment(Enrollment enrollment);
     void deleteEnrollment(int id);
     List<Course> getCoursesEnrolledByLearnerId(int learnerId);
+    public boolean isUserEnrolled(int learnerId, int courseId);
 }
