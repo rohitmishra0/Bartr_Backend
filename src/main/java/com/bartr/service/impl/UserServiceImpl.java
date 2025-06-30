@@ -136,6 +136,9 @@ public class UserServiceImpl implements UserService {
         if (updatedUser.getBio() != null && !updatedUser.getBio().isEmpty()) {
             existingUser.setBio(updatedUser.getBio());
         }
+        if (updatedUser.getResponseTime() > 0) {
+            existingUser.setResponseTime(updatedUser.getResponseTime());
+        }
 
 
 
