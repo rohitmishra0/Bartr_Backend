@@ -75,11 +75,10 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         enrollment.setCourse(course);
         enrollment.setLearner(learner);
 
-        return enrollmentRepository.save(enrollment);
         course.setEnrolledUser(course.getEnrolledUser()+1);
         courseRepository.save(course);
 
-        return enrollmentDao.save(enrollment);
+        return enrollmentRepository.save(enrollment);
     }
 
 
