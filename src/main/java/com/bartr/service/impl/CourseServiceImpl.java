@@ -3,11 +3,9 @@ package com.bartr.service.impl;
 import com.bartr.model.Category;
 import com.bartr.model.Course;
 import com.bartr.model.User;
-import com.bartr.repository.CategoryRepository;
-import com.bartr.repository.CourseRepository;
-import com.bartr.repository.EnrollmentRepository;
-import com.bartr.repository.UserRepository;
+import com.bartr.repository.*;
 import com.bartr.service.CourseService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +20,7 @@ public class CourseServiceImpl implements CourseService {
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
     private final EnrollmentRepository enrollmentRepository;
+    private final TransactionRepository transactionRepository;
 
     @Override
     public Course createCourse(Course course) {
@@ -77,8 +76,14 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void deleteCourse(int id) {
-        courseRepository.deleteById(id);
+    @Transactional
+    public void deleteCourse(int courseId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        enrollmentRepository.deleteByCourse(course);
+        transactionRepository.deleteByCourse(course);
+        courseRepository.deleteById(courseId);
     }
 
     @Override

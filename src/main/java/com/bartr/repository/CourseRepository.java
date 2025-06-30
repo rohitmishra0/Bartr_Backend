@@ -2,6 +2,8 @@ package com.bartr.repository;
 
 import com.bartr.model.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -12,5 +14,19 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
 
     List<Course> findByCategoryId(int categoryId);
 
+    @Query("""
+            SELECT c FROM Course c
+            JOIN c.category cat
+            JOIN c.creator creator
+            WHERE (
+                LOWER(c.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
+                LOWER(c.description) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
+                LOWER(cat.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
+                LOWER(creator.username) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
+                LOWER(creator.email) LIKE LOWER(CONCAT('%', :keyword, '%')) 
+            )
+            AND creator.id <> :userId
+            """)
+    List<Course> searchRelevantCourses(@Param("keyword") String keyword, @Param("userId") int userId);
 
 }

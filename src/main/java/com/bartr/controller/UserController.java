@@ -62,7 +62,7 @@ public class UserController {
     }
 
 
-    @PutMapping("/update/{id}") // Maps to /api/users/{id}
+    @PatchMapping("/update/{id}") // Maps to /api/users/{id}
     public ResponseEntity<?> updateUser(@PathVariable("id") int id, @RequestBody User userDetails) {
 
             // The service method is designed to handle partial updates by checking for non-null/non-empty fields
@@ -76,6 +76,12 @@ public class UserController {
         boolean updated= userService.changePassword(userId,currentPassword,newPassword);
         return ResponseEntity.ok("Password updated successfully");
 
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable int userId){
+        userService.deleteUser(userId);
+        return ResponseEntity.ok("User deleted successfully");
     }
 
 

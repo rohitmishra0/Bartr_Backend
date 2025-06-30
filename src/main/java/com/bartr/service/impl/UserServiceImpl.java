@@ -3,10 +3,12 @@ package com.bartr.service.impl;
 import com.bartr.exception.InvalidPasswordException;
 import com.bartr.exception.UserNameNotFoundException;
 import com.bartr.exception.UsernameAlreadyExistsException;
+import com.bartr.model.Course;
 import com.bartr.model.Role;
 import com.bartr.model.User;
-import com.bartr.repository.UserRepository;
+import com.bartr.repository.*;
 import com.bartr.security.JwtUtil;
+import com.bartr.service.CourseService;
 import com.bartr.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +31,12 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationManager authManager;
     private final UserAuthServiceImpl userAuthService;
     private final JwtUtil jwt;
+
+    private final PaymentRepository paymentRepository;
+    private final CourseRepository courseRepository;
+    private final TransactionRepository transactionRepository;
+    private final CourseService courseService;
+
 
     @Override
     @Transactional
@@ -136,6 +144,11 @@ public class UserServiceImpl implements UserService {
         if (updatedUser.getBio() != null && !updatedUser.getBio().isEmpty()) {
             existingUser.setBio(updatedUser.getBio());
         }
+        if (updatedUser.getResponseTime() > 0) {
+            existingUser.setResponseTime(updatedUser.getResponseTime());
+        }
+
+
 
         // Save and return the updated user entity
         return userRepository.save(existingUser);
@@ -153,6 +166,27 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return true;
     }
+
+    @Override
+    @Transactional
+    public void deleteUser(int userId){
+        User user= userRepository.findById(userId)
+                .orElseThrow(() -> new UserNameNotFoundException("User not found with ID: " + userId));
+
+        paymentRepository.deleteByUserId(userId);
+
+        List<Course> courses = courseRepository.findByCreatorId(userId);
+        for(Course course:courses){
+            courseService.deleteCourse(course.getId());
+        }
+        transactionRepository.deleteByUser(user);
+
+
+        userRepository.deleteById(userId);
+
+    }
+
+
 
 
 

@@ -15,4 +15,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
     List<Transaction> findByUser(User user);
 
     List<Transaction> findByCourse(Course course);
+
+    void deleteByCourse(Course courseId);
+    void deleteByUser(User user);
 }
