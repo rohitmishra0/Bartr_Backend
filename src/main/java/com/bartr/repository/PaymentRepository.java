@@ -10,4 +10,6 @@ import java.util.List;
 public interface PaymentRepository extends JpaRepository<Payment, Integer> {
     // Add custom query methods if needed
     List<Payment> findByUserId(int userId);
+
+    void deleteByUserId(int userId);
 }

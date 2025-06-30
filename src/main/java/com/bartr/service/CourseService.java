@@ -9,7 +9,7 @@ public interface CourseService {
 
     Course updateCourse(int id, Course course);
 
-    void deleteCourse(int id);
+
 
     Course getCourseById(int id);
 
@@ -18,5 +18,7 @@ public interface CourseService {
     List<Course> getCoursesByCreatorId(int creatorId);
 
     List<Course> getCoursesByCategoryId(int categoryId);
+
+    void deleteCourse(int courseId);
 
 }

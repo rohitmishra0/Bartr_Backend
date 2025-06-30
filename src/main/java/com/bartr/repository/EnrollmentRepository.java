@@ -20,4 +20,5 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Integer>
 
 
     boolean existsByLearnerIdAndCourseId(int learnerId, int courseId);
+    void deleteByCourse(Course course);
 }
