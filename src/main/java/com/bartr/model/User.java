@@ -59,7 +59,7 @@ public class User {
 	private String avatarUrl;
 
 	@Column(name = "responseTime")
-	private int responseTime;
+	private int responseTime=24;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "createdAt")
