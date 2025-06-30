@@ -78,7 +78,7 @@ public class SecurityConfig {
                         //User
                         .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/users/update/{id}").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/api/users/update/{id}").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/users/byEmail").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/users/updateXP").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/users/{id}/xp").authenticated()
