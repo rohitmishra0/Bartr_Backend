@@ -20,8 +20,8 @@ public class SearchController {
     private final SearchService searchService;
 
     @GetMapping
-    public ResponseEntity<List<Course>> search(@RequestParam String keyword, @RequestParam int userId){
-        List<Course> courses = searchService.search(keyword,userId);
+    public ResponseEntity<List<Course>> search(@RequestParam String keyword){
+        List<Course> courses = searchService.search(keyword);
         return ResponseEntity.ok(courses);
     }
 }

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface SearchService {
 
-    List<Course> search(String keyword, int userId);
+    List<Course> search(String keyword);
 }
