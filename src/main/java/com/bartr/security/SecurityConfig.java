@@ -53,7 +53,7 @@ public class SecurityConfig {
 
 
 //                  //Enrollments
-                        .requestMatchers(HttpMethod.GET, "/api/enrollments/isEnrolled").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/enrollments/isEnrolled").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/enrollments/insert").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/enrollments/insert/{userId}/{courseId}").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/enrollments").permitAll()
@@ -74,6 +74,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/transactions").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/transactions/{id}").hasRole("ADMIN")
 
+                        //Payment
+                        .requestMatchers(HttpMethod.GET,"/api/payments/price").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/payments/buy-xp").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/payments/user/{userId}").authenticated()
 
                         //User
                         .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
