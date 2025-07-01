@@ -23,10 +23,9 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
                 LOWER(c.description) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
                 LOWER(cat.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
                 LOWER(creator.username) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
-                LOWER(creator.email) LIKE LOWER(CONCAT('%', :keyword, '%')) 
+                LOWER(creator.email) LIKE LOWER(CONCAT('%', :keyword, '%'))
             )
-            AND creator.id <> :userId
             """)
-    List<Course> searchRelevantCourses(@Param("keyword") String keyword, @Param("userId") int userId);
+    List<Course> searchRelevantCourses(@Param("keyword") String keyword);
 
 }

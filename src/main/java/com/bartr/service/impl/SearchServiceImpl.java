@@ -19,9 +19,7 @@ public class SearchServiceImpl implements SearchService {
     private final UserRepository userRepository;
 
     @Override
-    public List<Course> search(String keyword, int userId){
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNameNotFoundException("User not found"));
-        return courseRepository.searchRelevantCourses(keyword,userId);
+    public List<Course> search(String keyword){
+        return courseRepository.searchRelevantCourses(keyword);
     }
 }

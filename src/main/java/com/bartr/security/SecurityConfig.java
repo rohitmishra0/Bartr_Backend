@@ -16,9 +16,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -90,6 +92,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/api/users/changePassword/{userId}").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/users/{userId}").authenticated()
 
+
+                        //Search
                         .requestMatchers(HttpMethod.GET, "/api/search").permitAll()
 
 
@@ -102,7 +106,12 @@ public class SecurityConfig {
 //                        .anyRequest().permitAll()
         );
 
-        httpSec.cors(Customizer.withDefaults());
+
+        httpSec.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+
+
+
+        //httpSec.cors(Customizer.withDefaults());
         httpSec.httpBasic(Customizer.withDefaults());
         httpSec.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -123,17 +132,51 @@ public class SecurityConfig {
     }
 
     // filter to allow your frontend to communicate with backend
+
+
+
+    /**
+     * Configures the CORS (Cross-Origin Resource Sharing) policy.
+     * This allows web applications from other origins (e.g., a frontend running on localhost:4200)
+     * to make requests to this API.
+     *
+     * @return A CorsConfigurationSource bean.
+     */
     @Bean
-    public CorsFilter corsFilter() {
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        // Allow requests from the Angular frontend development server.
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        // Allow common HTTP methods.
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+        // Allow all headers to be sent in requests.
+        configuration.setAllowedHeaders(List.of("*"));
+        // Allow sending credentials (like cookies or HTTP authentication headers, though JWT is typically in Authorization header).
+        configuration.setAllowCredentials(true);
+        // Expose the "Authorization" header to the client, which is needed to read the JWT.
+        configuration.setExposedHeaders(List.of("Authorization"));
+
+        // Apply this CORS configuration to all incoming paths.
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-
-        config.setAllowedOriginPatterns(List.of("*")); // Ensure correct frontend URL
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true); // Must match frontend requests
-
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
+
+
+
+
+
+//    @Bean
+//    public CorsFilter corsFilter() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        CorsConfiguration config = new CorsConfiguration();
+//
+//        config.setAllowedOriginPatterns(List.of("*")); // Ensure correct frontend URL
+//        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+//        config.setAllowedHeaders(List.of("*"));
+//        config.setAllowCredentials(true); // Must match frontend requests
+//
+//        source.registerCorsConfiguration("/**", config);
+//        return new CorsFilter(source);
+//    }
 }
