@@ -78,7 +78,7 @@ public class SecurityConfig {
 
                         //Payment
                         .requestMatchers(HttpMethod.GET,"/api/payments/price").authenticated()
-                        .requestMatchers(HttpMethod.GET,"/api/payments/buy-xp").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/api/payments/buy-xp").authenticated()
                         .requestMatchers(HttpMethod.GET,"/api/payments/user/{userId}").authenticated()
 
                         //User
